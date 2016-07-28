@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sizzle test</title>
+    <style>
+        .d { width: 100px; height: 20px;
+            border: 1px dashed red;
+            margin: 10px 0; }
+    </style>
+    <script src="RickHFramework.js"></script>
+    <script src="Sizzle.js"></script>
+    <script type="text/javascript">
+
+        // by commentting the following statement, we can import the different framework( Sizzle or RickHFramework)
+//        rickHFramework.select = Sizzle;
+
+        onload = function () {
+            RH( '.c>p, #dv p' ).each(function () {
+                this.className += ' d';
+            })
+
+        };
+    </script>
+</head>
+<body>
+<div class="c">
+    <div>
+        <p>0<span>1</span>23</p>
+    </div>
+</div>
+<div class="c">
+    <p class="p1">0<span>1</span>23</p>
+    <div>
+        <p>0<span>1</span>23</p>
+    </div>
+</div>
+<div id="dv">
+    <p class="p2">0<span>1</span>23</p>
+    <div>
+        <p class="p3">0<span>1</span>23</p>
+    </div>
+</div>
+</body>
+</html>

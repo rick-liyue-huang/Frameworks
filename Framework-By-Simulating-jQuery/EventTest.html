@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>event test</title>
+    <style>
+        .c {
+            background-color: #000;
+        }
+
+    </style>
+    <script src="RickHFramework.js"></script>
+    <script>
+
+        RH(function () {
+
+            RH( '#btn' ).click( function () {
+                RH( 'body' ).toggleClass( 'c' );
+            });
+
+        });
+    </script>
+</head>
+<body>
+<input type="button" id="btn" value=" click " />
+</body>
+</html>
