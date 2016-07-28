@@ -1,2 +1,2 @@
 # Framework
-Build a framework to simulate jQuery Framework
+Build some frameworks to simulate existed frameworks or create some new frameworks...
