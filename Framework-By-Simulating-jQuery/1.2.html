@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div, p {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div></div>
+    <div></div>
+    <p></p>
+<script>
+    /*
+    * 修改get方法获得基本选择器
+    *
+    * 单独编写一个函数，在函数中如果获得id，后者tag调用相对的方法
+    * */
+
+    var getId = function (id, results) {
+        results = results || [];
+        results.push(document.getElementById(id));
+        return results;
+    };
+
+    var getClass = function (className, results) {
+        results = results || [];
+        results.push.apply(results, document.getElementsByClassName(className));
+        return results;
+    };
+
+    var get = function (selector, results) {
+        results = results || [];
+        var rquickExpr = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+//        var rquickExpr = /^(?:   #([\w-]+)  | \.([\w-]+)   |     ([\w]+)  |   \*)$/,
+             m = rquickExpr.exec(selector);
+
+        if (m) {
+            if(m[1]) {
+                results = getId(m[1], results);
+            } else if (m[2]) {
+                results = getClass(m[2], results);
+            } else if (m[3]) {
+                results = getTag(m[3], results);
+            } else if (m[4]) {
+                results = getTag(m[4], results);
+            }
+
+        }
+
+//        if (m) {
+//            if(m[1]) {
+//                results = getId(m[1], results);
+//            } else if (m[2]) {
+//                results = getClass(m[2], results);
+//            } else {
+//                results = getTag(m[3] || "*", results);
+//            }
+//
+//        }
+
+        return results; // 如果没有匹配到，就直接返回原来的结果
+    }
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

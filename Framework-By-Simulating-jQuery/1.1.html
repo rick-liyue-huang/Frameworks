@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.12.3.js"></script>
+</head>
+<body>
+<script>
+
+    /*
+    *
+    * 如果想遍历一个数组，是要对数组做什么事情？
+    * 凡是涉及到遍历才能完成的事情都应该可以做 （修改，查询）
+    *
+    * */
+
+    var arr = [1, 2, 3, 4, 5];
+
+    /*
+    * 1.求和
+    * 2.求最大值
+    * 3.求最大值
+    * 4.查找3
+    * 5.查找5
+    * */
+    var sum = 0;
+    for (var i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    console.log(sum);
+
+    // 2
+    var max = arr[0];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] >= max) {
+            max = arr[i];
+        }
+    }
+    console.log(max);
+
+    // 3.
+    var min = arr[0];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] <= min) {
+            min = arr[i];
+        }
+    }
+    console.log(min);
+
+    // 4
+    var find1 = -1;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === 3) {
+            find1 = i;
+            break;
+        }
+    }
+    console.log(i);
+
+    //5.
+    var find2 = -1;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === 5) {
+            find2 = i;
+            break;
+        }
+    }
+    console.log(i);
+
+
+//
+    var each = function (arr, fn) {
+        for (var i = 0; i < arr.length; i++) {
+//           var res = fn(i, arr[i]);
+            if (fn.call(arr[i], i, arr[i]) === false) {
+                break;
+            }
+        }
+    };
+    each(arr, function (i, v) {
+        sum += v;
+    });
+
+    var max = arr[0];
+    each(arr, function (i, v) {
+        if (max <= v) {
+            max = v;
+        }
+    });
+
+
+//    进一步封装， 因为for 无法跳出
+    var index = -1;
+    each(arr, function (i, v) {
+//        if (v === 3) {
+//            index = i;
+//            return false;
+//        }
+        console.log(this);
+
+    });
+
+
+    // 对照jQuery
+    $.each(arr, function (i, v) {
+//        console.log(i + ',' + v);
+//        if (v == 2) {
+//            return false;
+//        }
+        console.log(this);
+     });
+
+
+//    优化each  方法
+    var each = function (arr, fn) {
+        for (var i = 0; i < arr.length; i++) {
+            if (fn.call(arr[i], i, arr[i]) === false) {
+                break;
+            }
+        }
+    };
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

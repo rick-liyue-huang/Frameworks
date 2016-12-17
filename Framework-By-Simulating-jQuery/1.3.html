@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //    首先兼容className 函数
+    /*
+     * 1.如何判断浏览器不支持该方法
+     * 在全局作用域中（最终都要变成沙箱）提供一个叫做support对象
+     * 里面提供所有的与方法名相同的属性，值均为boolean
+     * 在浏览器加载js的开始时候，就进行能力判断，将与方法名相同属性作为真与假进行存储
+     * 那么凡是涉及到能力检测的时候就直接使用support即可
+     * 2. 如何实现新方法
+     * */
+//    var support = {};
+//    support.getElementsByClassName = !!document.getElementsByClassName;
+//    if (support.getElementsByClassName) {
+//        return node.getElementsByClassName(className);
+//    } else {
+//
+//    }
+
+//    => 进一步能力检测的实现逻辑
+    var support = {};
+    support.getElementsByClassName = !!document.getElementsByClassName;
+    support.getElementsByClassName = (function () {
+        var isExist = !!document.getElementsByClassName;
+        if (isExist && typeof document.getElementsByClassName == 'function') {
+
+            // 自己创建一些元素，并且加上class属性，看是否可以获得到加上的所有的元素
+            var div = document.createElement('div'),
+                    divWithClass = document.createElement('div');
+            divWithClass.className = 'c';
+            div.appendChild(divWithClass);
+            return div.getElementsByClassName('c')[0] === divWithClass;
+        }
+        return false;
+    })();
+
+    if (support.getElementsByClassName) {
+        console.log('support classname');
+    } else {
+        console.log('no support');
+    }
+
+
+
+    //    $('p .dv') === $('.dv', 'p') ===> $('.dv', document.body) ==> $('.dv', $('body'))
+
+    // 类比出来  get (selector, context, results);   context 就是 上下文
+
+    // get 函数的优化，加入上下文
+</script>
+</body>
+</html>
