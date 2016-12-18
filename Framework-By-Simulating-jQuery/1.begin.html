@@ -151,7 +151,7 @@
         results.push(document.getElementById(idName));
         return results;
     };
-    
+
 
     var each = function (arr, fn) {
         for (var i = 0; i < arr.length; i++) {
@@ -172,8 +172,176 @@
     });
 
 
-    
-    
+    var divs = document.getElementsByTagName('div');
+    var ps = document.getElementsByTagName('p');
+    var getTag = function (tagName) {
+        return document.getElementsByTagName(tagName);
+    };
+
+    var divs = getTag('div');
+    var ps = getTag('p');
+    var i;
+    for (i = 0; i < divs.length; i++) {
+        divs[i].style.backgroundColor = 'green';
+    }
+    for (i = 0; i < ps.length; i++) {
+        ps[i].style.backgroundColor = 'yellow';
+    }
+
+//
+//    var each = function (arr, fn) {
+//        for (var i = 0; i < arr.length; i++) {
+//            fn(i, arr[i]);
+//        }
+//    };
+//    var each = function (arr, fn) {
+//        for (var i = 0; i < arr.length; i++) {
+//            fn.call(arr[i], i, arr[i]);
+//        }
+//    };
+//    each(divs, function (i, v) {
+//        this.style.backgroundColor = 'red';
+//    });
+//    each(ps, function (i, v) {
+//        this.style.backgroundColor = 'yellow';
+//    });
+//
+//    var sum = 0;
+//    var arr1 = [1, 2, 5, 6, 3, 7];
+//    for (var i = 0; i < arr1.length; i++) {
+//        sum += arr1[i];
+//    }
+//    console.log(sum);
+//
+//    var max = arr1[0];
+//    for (var i = 0; i < arr1.length; i++) {
+//        if (max <= arr1[i]) {
+//            max = arr1[i];
+//        }
+//    }
+//    console.log(max);
+//
+//    var min = arr1[0];
+//    for (var i = 0; i < arr1.length; i++) {
+//        if (min >= arr1[i]) {
+//            min = arr1[i];
+//        }
+//    }
+//    console.log(min);
+//
+//    var index = -1;
+//    for (var i = 0; i < arr1.length; i++) {
+//        if (arr1[i] == 3) {
+//            index = i;
+//            break;
+//        }
+//    }
+//    console.log(i);
+//
+//    for (var i = 0; i < arr1.length; i++) {
+//        if (arr1[i] == 5) {
+//            index = i;
+//            break;
+//        }
+//    }
+//    console.log(index);
+//
+//    var each = function (arr, fn) {
+//        for (var i = 0; i < arr.length; i++) {
+//            if (fn.call(arr[i], i, arr[i]) === false) {
+//                break;
+//            }
+//        }
+//    };
+//
+//    var max1 = arr1[0];
+//    each(arr1, function (i, v) {
+//        if (max1 <= v) {
+//            max1 = v;
+//        }
+//    });
+//    console.log(max1);
+//
+//    var min1 = arr1[0];
+//    each(arr1, function (i, v) {
+//        if (min >= v) {
+//            min1 = arr1[i];
+//        }
+//    });
+//    console.log(min1);
+//
+//    var index1 = -1;
+//    each(arr1, function (i, v) {
+//        if (v == 5) {
+//            index1 = i;
+//        }
+//    });
+//    console.log(index1);
+//
+//    var getTag1 = function (tagName, results) {
+//
+//        results = results || [];
+//        results.push.apply(results, document.getElementsByTagName(tagName));
+//        return results;
+//    };
+//
+//    var list = getTag1('div');
+//    list = getTag1('p', list);
+//    each(list, function (i, v) {
+//        this.style.backgroundColor = 'pink';
+//    });
+//
+//    var getId = function (idName, results) {
+//        results = results || [];
+//        results.push(document.getElementById(idName));
+//        return results;
+//    };
+//
+//    var getClass = function (className, results) {
+//        results = results || [];
+//        results.push.apply(results, document.getElementsByClassName(className));
+//        return results;
+//    };
+//
+//    var get = function (selector, results) {
+//        results = results || [];
+//        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+//                m = rquickExp.exec(selector);
+//
+//        if (m) {
+//
+//            if (m[1]) {
+//                results = getId(m[1], results);
+//            } else if (m[2]) {
+//                results = getClass(m[2], results);
+//            } else if (m[3]) {
+//                results = getTag1(m[3], results);
+//            } else if (m[4]) {
+//                results = getTag1(m[4], results);
+//            }
+//        }
+//        return results;
+//    };
+//
+//    var support = {};
+//    support.getElementsByClassName = !!document.getElementsByClassName;
+//    support.getElementsByClassName = (function () {
+//        var isExist = !!document.getElementsByClassName;
+//        if (isExist && typeof document.getElementsByClassName === 'function') {
+//            var div = document.createElement('div'),
+//                divWithClass = document.createElement('div');
+//            divWithClass.className = 'c';
+//            div.appendChild(divWithClass);
+//            return div.getElementsByClassName('c')[0] === divWithClass;
+//        }
+//    })();
+//    if (support.getElementsByClassName) {
+//        console.log('support class');
+//    } else {
+//        console.log('no support class');
+//    }
+//
+//
     
 </script>
 </body>
