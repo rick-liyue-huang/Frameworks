@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .rect {
+            width: 400px;
+            height: 50px;
+            margin: 10px 0;
+        }
+        .c {
+            border: 1px solid red;
+        }
+        .c1 {
+            border: 1px solid blue;
+        }
+        .c2 {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="c3">
+        <div class="c1 rect"></div>
+        <div class="c2 rect"></div>
+        <div class="c rect"></div>
+        <div class="c1 rect"></div>
+    </div>
+    <hr>
+    <div>
+        <div class="c1 rect"></div>
+        <div class="c2 rect"></div>
+        <div class="c rect"></div>
+        <div class="c1 rect"></div>
+    </div>
+
+<script>
+
+    /*
+    * get('selector', 父元素，results); -> 在父元素里面实现这个功能, 这个父元素就是向下文
+    *
+    * 如果要实现这个功能， 应该先找到父元素。
+    * 1.首先假定 父元素 就是 dom 元素
+    * 首先应该考虑修改查找元素的三个get方法，然后在考虑总的 get 方法
+    * 注意还是将 results 方法后面， 因为 results 是可以省略的
+    *
+    *
+    *
+    * 2. 假定 context 是一个dom数组，需要做一个遍历操作
+    * */
+
+    var getTag = function (tagName, context, results) {
+        results = results || [];
+        context = context || document;
+        results.push.apply(results, context.getElementsByTagName(tagName));
+        return results;
+    };
+
+
+    var getId = function (idName, context, results) {
+        results = results || [];
+        context = context || document;
+        results.push(document.getElementById(idName));
+        return results;
+    };
+
+    var getClass = function (className, context, results) {
+        results = results || [];
+        context = context || document;
+        if (document.getElementsByClassName) {
+            results.push.apply(results, context.getElementsByClassName(className));
+        } else {
+
+            var tempArr, i;
+            for (i = 0; i < tempArr.length; i++) {
+                if ( (' ' + tempArr[i].className + ' ').indexOf(' ' + className + ' ') != -1 ) {
+                    results.push(tempArr[i]);
+                }
+            }
+        }
+        return results;
+
+    };
+
+    var get = function (selector, context, results) {
+        results = results || [];
+        context = context || document;
+
+        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+            m = rquickExp.exec(selector);
+
+        if (m) {
+            if (m[1]) {
+                results = getId(m[1], results);
+            } else if (m[2]) {
+                results = getClass(m[2], context, results);
+            } else if (m[3]) {
+                results = getTag(m[3], context, results);
+            } else if (m[4]) {
+                results = getTag(m[4], context, results);
+            }
+        }
+        return results;
+    };
+
+    get('.c', get('.c3')[0])[0].style.backgroundColor = 'yellow';
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
