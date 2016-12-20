@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="dv1">
+        <p>p1</p>
+        <p>p2</p>
+        <p>p3</p>
+        <p>p4</p>
+    </div>
+    <div id="dv2"></div>
+<script>
+
+    /*
+    *
+    * 框架创建代码的方法
+    *
+    * 类比 jQuery
+    * $('<div style=""></div>');
+    *
+    * rickH 框架
+    * var dom = RH('<a href="http://www.google.com">one link</a>')
+    * */
+
+    var cElem = function (html) {
+        // 1.在内部创建一个docFrag,但是必须用真正的div
+        var docFrag = document.createDocumentFragment();
+
+        // 2. 创建真正的div，然后设置其innerHTML 为输入的字符串
+//        然后再遍历该子元素，将内容加入到docFrag中
+
+        var div = document.createElement('div');
+
+        // 3. 将字符串设置为 它的 innerHTML
+        div.innerHTML = html;
+
+//        4.遍历div的子元素加入到 docFrag, 因为DOM元素只有一个父元素
+        while (div.firstChild) {
+            docFrag.appendChild(div.firstChild);
+        }
+        // 4. 获得其子元素返回
+        return docFrag;
+    };
+
+    // test
+    var dom = cElem('<a href="http://www.google.com">google</a>' + '<br>' +
+        '<a href="http://www.baidu.com">baidu</a>');
+
+    document.body.appendChild(dom);
+
+
+    /*
+    * dom 元素的父节点问题
+    * */
+
+    var d1 = document.getElementById('dv1');
+    var d2 = document.getElementById('dv2');
+
+    var list = d1.childNodes;
+//    var len;
+//    for (var i = 0, len = list.length; i < len; i++) {
+//        d2.appendChild(list[0]);
+//    }
+//    while (list[0]) {
+//        d2.appendChild(list[0]);
+//    }
+
+//    =>
+    while (d1.firstChild) {
+        d2.appendChild(d1.firstChild);
+    }
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
