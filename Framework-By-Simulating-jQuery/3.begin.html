@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 1000px;
+            height: 50px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+
+        .c {
+            border: 3px solid blue;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    // 创建10个div,带有序号，并且加入到body中
+//    var i, node, txt;
+//    for (i = 0; i < 10; i++) {
+//        node = document.createElement('div');
+//        txt = document.createTextNode('div' + (i + 1));
+//        node.appendChild(txt);
+//        document.body.appendChild(node);
+//    }
+
+
+    // 在页面中创建3个div，要求设置其边框与颜色以及大小
+//    可以1. 设置style 属性或者通过 类样式名设置
+//    setAttribute, .语法
+//    var j, node1
+//    for (j = 0; j < 3; j++) {
+//        node = document.createElement('div');
+//
+////        方法一： 使用setAttribute
+////        node.setAttribute('class', 'c');
+////
+////        方法二：使用className
+//        node.className = 'c';
+//        document.body.appendChild(node);
+//
+//    }
+
+    /*
+    * 1.方法比较多，每种方法都要熟悉
+    * 2.由于每一次循环都是用document.body.appendChild，对导致每次 for 循环都要刷新页面。从而影响性能
+    * 因此我们应当采用临时的数据，存储这些DOM对象，在全部创建完成以后再一并加入。
+    *
+    * 只有创建一个节点标签，才可以不影响整个页面布局，同时允许存储其他标签
+    *
+    * 因此上面的代码可以改为
+    * */
+
+//    var i, node, container = document.createElement('div');
+//    for (i = 0; i < 3; i++) {
+//        node = document.createElement('div');
+//        node.className = 'c';
+//        container.appendChild(node);
+//    }
+//    document.appendChild(container);
+
+    /*
+    * 但是这里面就人为的多出了一个DOM元素， 因此我们将 container换为
+    * */
+
+//    var i, node, container = document.createDocumentFragment(); // 能够缓存元素的对象，但是不占用标签
+//    for (i = 0; i < 3; i++) {
+//        node = document.createElement('div');
+//        node.className = 'c';
+//        container.appendChild(node);
+//    }
+//    document.body.appendChild(container);
+//    这里 container 相当于 div， 但是不占用标签。
+
+    /*
+    * 我们也可以利用 innerHTML,
+    *
+    * */
+//    var i, s ='';
+//    for (i = 0; i < 10; i++) {
+//        s += '<div>' + i + '</div>';
+//    }
+//    document.body.innerHTML = s;
+
+//    测试时间来看性能比较 -- 在页面中添加1000个div
+
+    var count = 100000;
+    var test1 = function () {
+        var start = +new Date(), // 现在时间是毫秒
+            i, end, node, docFrag;
+        docFrag = document.createElement('div');
+        for (i = 0; i < count; i++) {
+            node = document.createElement('div');
+            docFrag.appendChild(node);
+        }
+        document.body.appendChild(docFrag);
+
+        end = +new Date();
+        console.log('test1 = ' + (end - start));
+    };
+
+    test1();
+
+    var test2 = function () {
+        var start = +new Date(), // 现在时间是毫秒
+            i, end, s;
+        s = '';
+        for (i = 0; i < count; i++) {
+            s += '<div>' + i + '</div>'
+        }
+        document.body.innerHTML = s;
+
+        end = +new Date();
+        console.log('test2 = ' + (end - start));
+    };
+    test2();
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

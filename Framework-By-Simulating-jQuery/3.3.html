@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c {
+            width: 300px;
+            height: 100px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+    </style>
+    <script src="select.js"></script>
+    <script src="createElement.js"></script>
+</head>
+<body>
+
+<script>
+
+    /*
+    * 框架的雏形
+    *
+    * 1.分析方法调用规则
+    * 调用规则 cElem(..).appendTo();
+    * 在 jQuery
+    * $(html).appendTo(...)
+    * $(选择器).appendTo(....)
+    * $('..').appendTo(...)
+    * 总之里面可以是 html， 字符串，选择器，DOM对象，DOM数组
+    *
+    * 我们需要的是一个通用函数，类似于 jquery中的$，
+    *
+    * 返回自定义对象，而是通过通用函数返回自定义对象，如果通用函数是一个字符串
+    * 则，创建该DOM对象，加到通用函数返回的对象中。
+    *
+    * 因此，我们需要准备一个 rickH 的函数， 将其放在一个rickH.js文件中， 提供简写为 RH
+    * */
+
+    /*
+    var rickH = function (selector) {
+        var o;
+
+        if (selector 是选择器)
+        {
+            o = select(selector);
+        } else if (html 字符串) {
+            o = cElem(selector);
+        }
+
+        o.appendTo = function () {};
+        o.prependTo = function () {};
+        o.after = function () {};
+        o.before = function () {};
+        o.css = function () {};
+        return o;
+    };
+
+    */
+
+    // 因此进一步得到框架雏形
+
+    // 简单的实现以下，selector可以是HTML字符串，也可以是选择器
+
+//    这里我们必须知道，我们返回的就是 rickH对象
+    var rickH = function (selector) {
+        return new F(selector);
+    };
+
+
+//    这个F 就是一个构造函数
+
+
+    var F = function (selector) {
+        if (typeof selector === 'string') {
+            if (selector.charAt(0) === '<') { // 是一个HTML字符串
+                this.elements = cElem(selector); // 这个elements就是我们自定义的属性, 这样哪些dom对象就放到elements中。
+            } else {
+                this.elements = select(selector);
+            }
+        }
+    };
+
+    F.prototype = {
+        constructor: F,
+        appendTo: function (selector) {
+//            是将this.elements 加入到 selector上面
+            selector.appendChild(this.elements);
+        },
+        css: function (name, value) {
+            this.elements[i].style[name] = value;
+        }
+    };
+
+
+</script>
+
+<script>
+    rickH('<div class="c"></div><div class="c"></div>').appendTo(document.body);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
