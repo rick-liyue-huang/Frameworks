@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div, p {
+            width: 1000px;
+            height: 50px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<p></p>
+<p></p>
+<script>
+
+    /*
+    *
+    * 1. 开始的时候写了一个
+    * getTag('tag'), getId('id'), getClass('classname')
+    *
+    * 2. 在操作DOM元素的时候，可能需要获得多个元素， 做了一个相同操作
+    * getId('id', results), getTag('tag', results), getClass('classname', results)
+    *
+    * 3.循环使用非常频繁
+    * 为了减少重复的代码，也为了避免遍历使用的变量i 的局部特性
+    * each(数组， function(i, v) {});
+    * 内部是
+    * fn.call(arr[i], i, arr[i]);
+    * 这里注意： 如果使用 call 或者 apply 时候，第一个参数必须是 对象 或者 空，默认为window。如果是基本类型会自动的转化为其包装类型
+    *
+    * 4.封装get函数
+    * get(selector, results);
+    *
+    * 5. 要求在上下文中完成
+    * select('selector', context, results);
+    *
+    * 6. 为了解决浏览器的兼容
+    * 移除左右空格 myTrim()
+    *
+    * IE低版本的myPush()
+    *
+    * 能力检测问题（2种） 提供一个 support 对象，以 减少原型链的搜索。
+    *
+    *
+    * */
+
+    /*
+    * push
+    * push.apply的形式调用
+    * 功能push.apply(伪数组1， 伪数组2)
+    *
+    * */
+//    var push = {
+////                       [1 ,2]  [3, 4, 5]
+//        apply: function (arr1, arr2) {
+////            将arr2里面每一个元素都加入到arr1中
+//
+////            如果arr1是真数组
+////            for (var i = 0; i < arr2.length; i++) {
+////                arr1.push(arr2[i]);
+////            或者
+////            arr1[arr1.length++] = arr2[i]
+////            }
+//            var l = arr1.length;
+//            var i = 0;
+////
+////            for (var i = 0; i < arr2.length; i++) {
+////                arr1[l + i] = arr2[i]
+////            }
+//////     如果arr1是真数组，没有问题，如果是伪数组，那么length不会自动增加，所以需要手动赋值
+////            arr1.length = l + i;
+//
+//            while ((arr1[l++] = arr2[i++])) {}
+//            arr1.length = l - 1;
+//        }
+//    };
+
+
+    /*
+    * DOM 元素的属性和方法
+    * 1. 为什么使用DOM
+    * <div><p></p></div>  -> node: {children: p} 将字符串转化为针对对象的操作
+    *
+    * 2. DOM将HTML页面中所有的元素都看作是对象树
+    *
+    * 3. 属性：
+    * nodeType: 描述DOM对象的类型，且只是针对 元素对象， 而且数组是不具备 这个属性的 1为元素对象，2为属性对象，3为文本对象
+    * nodeValue: 用来获得该DOM对象的值，只能用在文本标签中
+    * nodeName: 用来多的DOM对象的标签名，一般只用在元素标签上，如果是标签，返回的是全大写的名字字符串，所以可以使用toLowerCase
+    * p.childNodes[1].nodeName.toLocaleLowerCase()
+    *
+    * 4. 关系
+    * firstChild, lastChild childNodes  nextSibling, previousSibling, parentNode
+    *
+    * 内容属性： innerHTML, innerText, innerHTML 带有标签
+    *
+    * 5. 方法
+    * 增删改查 appendChild, insertBefore, removeChild, innerHTML
+    * */
+
+
+    // push 方法
+    var each = function (arr, fn) {
+        var i,
+            tempRes;
+
+        for (i = 0; i < arr.length; i++) {
+            tempRes = fn.call(arr[i], i, arr[i]);
+            if (tempRes === false) {
+                break;
+            } else if (tempRes === -1) {
+                continue;
+            }
+        }
+    };
+
+    // push
+    var push = [].push;
+    var list;
+    try {
+        var c = document.createElement('div');
+        c.appendChild(document.createElement('div'));
+        list = c.getElementsByTagName("*"); // list 是一个伪数组
+        push.apply([], list);
+
+    } catch (e) {
+
+        push = {
+            apply: function (target, els) {
+                var j = target.length,
+                    i = 0;
+                while ((target[j++] = els[i++])) {}
+                target.length = j - 1;
+            }
+        };
+
+    } finally {
+        c = list = null;
+
+    }
+    
+//    应用这个push方法
+    var tag = function (tag, results) {
+        results = results ||[];
+        push.apply(results, document.getElementsByTagName(tag));
+        return results;
+    };
+    
+    var list = tag('div');
+    list = tag('p', list);
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'blue';
+    }
+    
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

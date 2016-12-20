@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 1000px;
+            height: 50px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+
+        .c {
+            border: 3px solid blue;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    // 创建10个div,带有序号，并且加入到body中
+    var i, node, txt;
+    for (i = 0; i < 10; i++) {
+        node = document.createElement('div');
+        txt = document.createTextNode('div' + (i + 1));
+        node.appendChild(txt);
+        document.body.appendChild(node);
+    }
+
+
+    // 在页面中创建3个div，要求设置其边框与颜色以及大小
+//    可以1. 设置style 属性或者通过 类样式名设置
+//    setAttribute, .语法
+    var j, node1
+    for (j = 0; j < 3; j++) {
+        node = document.createElement('div');
+
+//        方法一： 使用setAttribute
+//        node.setAttribute('class', 'c');
+//
+//        方法二：使用className
+        node.className = 'c';
+        document.body.appendChild(node);
+
+    }
+
+    /*
+    * 1.方法比较多，每种方法都要熟悉
+    * 2.由于每一次循环都是用document.body.appendChild，对导致每次 for 循环都要刷新页面。从而影响性能
+    * 因此我们应当采用临时的数据，存储这些DOM对象，在全部创建完成以后再一并加入。
+    * */
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
