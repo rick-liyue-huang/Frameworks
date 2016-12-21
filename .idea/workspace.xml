@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="426cfd60-33e5-460a-8cb2-ce06fbdaaabb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.3.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.4.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.5.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.6.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.begin.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/createElement.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/select.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.begin.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.check.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/.idea/workspace.xml" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.10.html" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.10.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html" afterPath="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html" />
     </list>
     <ignored path="Frameworks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,40 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="1.begin.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/1.begin.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5526">
-              <caret line="307" column="65" selection-start-line="307" selection-start-column="26" selection-end-line="307" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="1.finish.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/1.finish.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1350">
-              <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2.begin.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.begin.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2664">
-              <caret line="148" column="24" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="2.9.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.9.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
+            <state relative-caret-position="2664">
               <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
             </state>
@@ -80,7 +44,7 @@
       <file leaf-file-name="2.10.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.10.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="4014">
               <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
               <folding />
             </state>
@@ -90,7 +54,7 @@
       <file leaf-file-name="3.3.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
+            <state relative-caret-position="1296">
               <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding />
             </state>
@@ -100,38 +64,78 @@
       <file leaf-file-name="3.4.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
+            <state relative-caret-position="882">
               <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="3.5.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.5.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="29" column="6" selection-start-line="10" selection-start-column="4" selection-end-line="29" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="3.6.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.6.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="122" column="6" selection-start-line="10" selection-start-column="3" selection-end-line="122" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="3.7.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="3.7.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="133" column="35" selection-start-line="133" selection-start-column="35" selection-end-line="133" selection-end-column="35" />
+            <state relative-caret-position="1098">
+              <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4.begin.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.begin.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="489">
+              <caret line="66" column="6" selection-start-line="53" selection-start-column="4" selection-end-line="66" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4.1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="126" column="47" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4.2.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.2.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="174" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4.3.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.3.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="594">
+              <caret line="100" column="20" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#303#354#0" expanded="false" />
+                <element signature="e#401#1032#0" expanded="false" />
+                <element signature="e#1160#1276#0" expanded="false" />
+                <element signature="e#1312#1930#0" expanded="false" />
+                <element signature="e#1963#2418#0" expanded="false" />
+                <element signature="e#2458#4726#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="4.check.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.check.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -143,6 +147,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -164,7 +169,12 @@
         <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.4.html" />
         <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.5.html" />
         <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.6.html" />
+        <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.begin.html" />
+        <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.1.html" />
         <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html" />
+        <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.2.js" />
+        <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.3.js" />
+        <option value="$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.check.html" />
       </list>
     </option>
   </component>
@@ -332,11 +342,12 @@
       <workItem from="1482219727522" duration="19000" />
       <workItem from="1482219811450" duration="4000" />
       <workItem from="1482219917800" duration="8157000" />
+      <workItem from="1482306665812" duration="11655000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38452000" />
+    <option name="totallyTimeSpent" value="50107000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -376,46 +387,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/1.begin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5526">
-          <caret line="307" column="65" selection-start-line="307" selection-start-column="26" selection-end-line="307" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/1.finish.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.begin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2664">
-          <caret line="148" column="24" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.9.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="37" column="6" selection-start-line="5" selection-start-column="4" selection-end-line="37" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.10.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/1.begin.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5526">
@@ -712,7 +683,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.6.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
+        <state relative-caret-position="2196">
           <caret line="122" column="6" selection-start-line="10" selection-start-column="3" selection-end-line="122" selection-end-column="6" />
           <folding />
         </state>
@@ -720,7 +691,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
+        <state relative-caret-position="882">
           <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
           <folding />
         </state>
@@ -728,7 +699,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
+        <state relative-caret-position="1296">
           <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding />
         </state>
@@ -736,7 +707,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.10.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
+        <state relative-caret-position="4014">
           <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
           <folding />
         </state>
@@ -744,17 +715,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/2.9.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="2664">
           <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.begin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="66" column="6" selection-start-line="53" selection-start-column="4" selection-end-line="66" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="126" column="47" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/3.7.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="133" column="35" selection-start-line="133" selection-start-column="35" selection-end-line="133" selection-end-column="35" />
+        <state relative-caret-position="1098">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="174" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.check.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Framework-By-Simulating-jQuery/4.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="100" column="20" selection-start-line="100" selection-start-column="20" selection-end-line="100" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#303#354#0" expanded="false" />
+            <element signature="e#401#1032#0" expanded="false" />
+            <element signature="e#1160#1276#0" expanded="false" />
+            <element signature="e#1312#1930#0" expanded="false" />
+            <element signature="e#1963#2418#0" expanded="false" />
+            <element signature="e#2458#4726#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

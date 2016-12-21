@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /*
+    * jq 里面
+    * $('<div></div>').appendTo(body);
+    *
+    * createElement 可以创建HTML 的 DOM对象
+    * <dom 对象>。appendTo(...)
+    * 原则： 不要直接的修改原生的内置对象的成员
+    * 也就是说DOM 对象不应该提供appendTo 方法
+    *
+    * 那么谁应该添加该方法
+    *  - 原型对象： jq对象的原型对象，包装对象（自定义对象）的原型对象
+    * */
+
+//    框架的结构
+//    var rickH = function (selector) {
+//        return new F(selector);
+//    };
+//
+//    var F = function (selector) {
+//
+//    };
+//    F.prototype = {
+//        appendTo: function (selector) {
+//
+//        }
+//    };
+
+    /*
+    * 缺点：
+    * 首先在沙箱中F对象对外不可见，无法实现扩展
+    * 同时在描述中容易造成多个变量暴露于全局中，
+    *
+    * 因此 解决方案是 直接将 F 绑定到rickH的上面
+    *
+    * 两种添加方法： rickH.init = F
+    * 另一种是 rickH.prototype.init = F.
+    * 应该用第二种：  如果想扩展，由于在方法中提供的方法一般是静态方法，作为工具使用
+    * 但是jq中并不是如此操作， 是因为，init 是用来创建实例对象的，因此将其放在原型对象中， 而直接作用在rickH上面的方法是静态方法。
+    * 这只是一种规则要求， 这是为了代码组织规范。初始化方法放在原型中更加合理，因为其与实例相关
+    *
+    * 因此上面的代码就变为了
+    * */
+
+    // rickH.prototype.init = F
+    var rickH = function (selector) {
+        return new rickH.prototype.init(selector);
+    };
+
+    rickH.fn.init.prototype = rickH.prototype;
+
+    rickH.fn = rickH.prototype = {
+        appendTo: function (selector) {
+
+        },
+        init: function () {
+            
+        }
+    };
+    
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

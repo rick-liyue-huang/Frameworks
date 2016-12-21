@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    // 双等号
+    var rickH = function (selector) {
+        return new rickH.prototype.init(selector);
+    };
+
+    rickH.fn.init.prototype = rickH.prototype;
+
+    rickH.fn = rickH.prototype = {
+        appendTo: function (selector) {
+
+        },
+        init: function () {
+
+        }
+    };
+
+    /*
+    * 代码在逻辑上组织时候是需要按照特定功能分组的
+    * 工具型方法：绑定在构造函数上面
+    * 例如要实现nextSibling
+    * jq中就是 next()
+    * 如果要实现该方法，实际上就是内部循环调用获得下一个元素的方法
+    * 就是一个DOM数组，获得每一个元素的下一个元素，组成一个新数组
+    * [div1, div2] => [div1.nextSibling, div2.nextSibling]
+    * 由于浏览器的不同，该方法可能会获得空的文本节点，这个不应该在元素上面考虑
+    * 因此需要一个通用的工具方法，来获得某一个元素的下一个元素
+    * [next(div1), next(div2)]
+    *
+    * 实际上如果放到沙箱中外部是无法访问的，也就是说必须只能在沙箱内部使用，该方法如果在框架扩展的时候是需要使用该功能的，
+    * 那么就出现无法共享的问题。因此为了共享应该将其作为静态方法存在。
+    * 那么在代码中如果添加该方法呢，有两种添加方法
+    * rickH.next = function
+    * rickH.extend({next: function}), 分模块划分
+    *
+    * 这样将来在添加方法的时候
+    *
+    * 实例方法
+    *
+    * rickH.prototype.next = function
+    * rickH.prototype.extend({next: function})
+    *
+    * 这样可以看出，我们对添加多的方法的时候还是 用 extend 比较好
+    * */
+    /*
+    var next = function (dom) {
+        var newDom = dom;
+        while (newDom = newDom.nextSibling) {
+            if (newDom.nodeType === 1) {
+                return newDom;
+            }
+        }
+    };
+    */
+
+    /*
+    * 这时候考虑要给两个对象添加extend方法
+    * 怎么添加
+    * */
+
+    rickH.extend = rickH.fn.extend = function (obj) {
+        for (var k in obj) {
+            this[k] = obj[k];
+        }
+    };
+
+
+    /*
+    * 关于循环克隆
+    *
+    * 将问题简化
+    * */
+    rickH('<div></div><div></div>').appendTo('div');
+//    就是将一个div 数组 （2个元素）添加到页面的div中 （2个）
+//          [d1, d2]                          [div1, div2]
+//    将d1 添加到div1和 div2中
+//    将d2 添加到div2 div2中
+
+//    当个元素要克隆几个，由需要添加的元素个数决定，刚刚是需要添加的个数-1
+
+//    再简化
+//    将 dv 加到 [div1 div2, div3]中
+//    div1.appendChild(dv.cloneNode(true));
+//    div2.appendChild(dv.cloneNode(true));
+//    div3.appendChild(dv);
+//   就是最后一个不克隆，前面所有的都需要克隆
+    for (var i = 0; i < list.length; i++) {
+        list[i].appendChild(i === list.length - 1 ?
+                dv:
+                dv.cloneNode(true));
+    }
+
+    // 接下来考虑两个循环，考虑两个元素添加到三个元素中
+//    ds = [d1, d2]              [div1, div2, div3]
+//    div1.appendChild(d1.cloneNode(true));
+//    div1.appendChild(d2.cloneNode(true));
+
+//    div2.appendChild(d1.cloneNode(true));
+//    div2.appendChild(d2.cloneNode(true));
+//
+//    div3.appendChild(d1);
+//    div3.appendChild(d2);
+
+//    添加一层循环
+    for (var i = 0; i < ds.length; i++) {
+        div1.appendChild(ds[i].cloneNode(true));
+    }
+    for (var i = 0; i < ds.length; i++) {
+        div2.appendChild(ds[i].cloneNode(true));
+    }
+    for (var i = 0; i < ds.length; i++) {
+        div3.appendChild(ds[i]);
+    }
+
+//    合并
+    for (var j = 0; j < list.length; j++) {
+        for (var i = 0; i < ds.length; i++) {
+            list[j].appendChild(j === list.length - 1 ?
+                                        ds[i] :
+                                        ds[i].cloneNode(true));
+        }
+    }
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

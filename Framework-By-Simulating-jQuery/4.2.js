@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body id="bd">
-<div></div>
-<div></div>
-<script>
-
+//by RICK HUANG
     //真正的框架封装,
 
     //    构造函数
+
+(function (window, undefined) { // 传入window是为了减少变量作用域的搜索，
+// undefined, 是因为有些浏览器没有实现undefined，将其作为变量来解释，这时候不传参表示其值就表示没有。
+
     var rickH = function rickH(selector) {
         return new rickH.fn.init(selector);
     };
 
-    //    核心原型
+//    核心原型
     rickH.fn = rickH.prototype = {
         constructor: rickH,
         selector: null,
@@ -34,10 +28,10 @@
         }
     };
 
-    //    原型链的调整
+//    原型链的调整
     rickH.fn.init.prototype = rickH.prototype;
 
-    //    为了可扩展
+//    为了可扩展
     rickH.extend = rickH.fn.extend = function (obj) {
         // 将obj的成员加入到 this上面
         var k;
@@ -46,7 +40,7 @@
         }
     };
 
-    // 扩展方法，基本的工具方法
+// 扩展方法，基本的工具方法
     rickH.extend({
 
         each: function (arr, fn) {
@@ -72,7 +66,7 @@
     });
 
 
-    // 判断类型的方法
+// 判断类型的方法
     rickH.extend({
         isFunction: function (obj) {
             return typeof obj === 'function';
@@ -98,46 +92,65 @@
 
 //        这里先假定 selector 是一个 DOM对象
         /*appendTo: function (selector) {
-            // 将this.elements 加入到selector中
+         // 将this.elements 加入到selector中
 
-            rickH.each(this.elements, function (i, v) { // 遍历所有的this.elements然后添加到DOM元素中
-                selector.appendChild(this);
-            });
-        },*/
+         rickH.each(this.elements, function (i, v) { // 遍历所有的this.elements然后添加到DOM元素中
+         selector.appendChild(this);
+         });
+         },*/
 
 //        如果假定 selector id 选择器 '#id' 形式
 
 //        appendTo: function (selector) {
 //            这时候可以使用 rickH(selector)
-            /*
-            * 问题：
-            * 将谁加到谁上面
-            * this.elements 加到 rickH(selector).elements 上面
-            *
-            * */
+        /*
+         * 问题：
+         * 将谁加到谁上面
+         * this.elements 加到 rickH(selector).elements 上面
+         *
+         * */
 //            rickH.each(this.elements, function () {
 //                rickH(selector).elements[0].appendChild(this);
 //            });
 //        }
 
         // 如果selector是标签选择器，则需要将所有的子元素 this.elements重复的加入到这些标签中
+        /*
+         appendTo: function (selector) {
+         var self = this;
+         var objs = rickH(selector).elements;
+         rickH.each(objs, function (i1,v1) {
+
+         //                将this.elements[i] 加到that 上面
+         var that = this;
+         rickH.each(self.elements, function (i2,v2) {
+         // this 当前元素要加入到that上
+         that.appendChild( i1 == objs.length - 1 ?
+         this :
+         this.cloneNode(true)); // 因为父节点的改变
+         //                    如果是最后一个就不克隆
+         });
+         });
+
+         }
+         */
+
+
         appendTo: function (selector) {
-            var self = this;
-            var objs = rickH(selector).elements;
-            rickH.each(objs, function (i1,v1) {
+            var objs = rickH(selector).elements,
+                i, j,
+                len1 = objs.length,
+                len2 = this.elements.length;
+            for (i = 0; i < len1; i++) {
 
-//                将this.elements[i] 加到that 上面
-                var that = this;
-                rickH.each(self.elements, function (i2,v2) {
-                    // this 当前元素要加入到that上
-                    that.appendChild( i1 == objs.length - 1 ?
-                            this : 
-                            this.cloneNode(true)); // 因为父节点的改变
-//                    如果是最后一个就不克隆
-                });
-            });
-
+                for (j = 0; j < len2; j++) {
+                    objs[i].appendChild(i === len1 - 1 ?
+                        this.elements[j] :
+                        this.elements[j].cloneNode(true));
+                }
+            }
         }
+
 
 
     });
@@ -169,46 +182,8 @@
         }
         return arr;
     };
-</script>
 
 
-<script>
-//    rickH('<div>1</div><div>2</div><div>3</div><div>4</div>').appendTo(document.body);
-rickH('<div>1</div><div>2</div><div>3</div><div>4</div>').appendTo('div');
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//    对外红开
+    window.RH = window.rickH = rickH;
+})(window);
