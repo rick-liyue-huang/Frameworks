@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!--<script src="4.2.js"></script>-->
-    <script src="4.3.js"></script>
+    <!--<script src="4.3.js"></script>-->
+    <script src="4.4.js"></script>
 </head>
 <body>
 <div></div>
@@ -16,8 +17,13 @@
     var temp = RH('div'); // length : 3
     var temp1 = RH(); // prototype length 0
 
-RH('<p>this is paragraph</p>').appendTo('div');
+//RH('<p>this is paragraph</p>').appendTo('div');
 
+    // 验证
+    var o = rickH('div');
+    var o1 = rickH(o[0]);
+    var o2 = rickH([o[0]]);
+    var o3 = rickH(o);
 </script>
 </body>
 </html>

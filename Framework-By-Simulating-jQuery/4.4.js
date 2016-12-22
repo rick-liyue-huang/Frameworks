@@ -22,9 +22,45 @@
         version: version,
         selector: null,
         length: 0, // 在原型中添加这个属性， 因为如果没有这个属性就默认从原型取。
+
+
+
+        //    进一步强化appendTo:
+        /*
+         * 考虑appendTo 的参数的可能性。
+         *
+         * 假定参数是选择器，那么得到的是rickH对象（伪数组），那么
+         * 代码的执行就没有问题.
+         * 如果传入的是dom 数组， dom对象， rickH对象 怎么办
+         *
+         * 1》如果是DOM数组 -- 只要objs 就是该DOM数组就可以了
+         * 2> 如果传入的是DOM对象， --- 只需要objs = [selector]; 将其转化为单元素数组即可
+         * 3》 如果传入的是rickH对象，与一样  objs = selector
+         * 4> 如果是字符串则和开始一样。 objs = rickH(selector);
+         *
+         * 那么如果将其在一句代码中完成判断。
+         *
+         * 思路就是 强化rickH 构造函数的兼容性， 因此上面的代码不需要再做改变
+         *
+         * selector 分为
+         * null, undefined, '',
+         * 函数，
+         * 字符串
+         * DOM数组
+         * DOM 对象
+         * rickH 对象
+         *
+         * */
+
+
+
+
+
         init: function (selector) {
 
-            if (typeof selector === 'string') {
+            if (!selector) return this;
+
+            if (rickH.isString(selector)) {
 
                 if (selector.charAt(0) === '<') {
                     // this.elements = parseHTML(selector);
@@ -32,9 +68,29 @@
                 } else {
                     // this.elements = select(selector);
                     rickH.push.apply(this, select(selector));
+                    this.selector = selector; // 表明只要有selector 属性的对象就是 rickH 对象
                 }
+                return this;
             }
-            this.selector = selector; // 表明只要有selector 属性的对象就是 rickH 对象
+
+            // DOM 对象
+            else if (rickH.isDOM(selector)) {
+                this[0] = selector;
+                this.length = 1;
+                return this;
+            }
+
+            // rickH 对象
+            else if (rickH.isRickH(selector)) {
+                return selector;
+            }
+
+            // DOM 数组
+            else if (rickH.isLikeArray(selector)) {
+                rickH.push.apply(this, selector);
+                return this;
+            }
+
         }
     };
 
@@ -93,7 +149,8 @@
             // return !!obj.selector;
             // return !!obj && obj.version && obj.version === version; // 必须是同一页面,不适用于嵌入界面， 同一框架
             // return !!obj && obj.version && obj.version.indexOf('rickH') === 0; //只要是有这个属性就可以
-            return obj.constructor.name === 'rickH'; // 因为有constructor这个属性，所以可以用这个方式来判断
+            // return obj.constructor.name === 'rickH'; // 因为有constructor这个属性，所以可以用这个方式来判断
+            return 'selector' in obj;
         },
         isDOM: function (obj) {
             return !!obj.nodeType;
@@ -151,21 +208,21 @@
          */
 
         /*
-        appendTo: function (selector) {
-            var objs = rickH(selector).elements,
-                i, j,
-                len1 = objs.length,
-                len2 = this.elements.length;
-            for (i = 0; i < len1; i++) {
+         appendTo: function (selector) {
+         var objs = rickH(selector).elements,
+         i, j,
+         len1 = objs.length,
+         len2 = this.elements.length;
+         for (i = 0; i < len1; i++) {
 
-                for (j = 0; j < len2; j++) {
-                    objs[i].appendChild(i === len1 - 1 ?
-                        this.elements[j] :
-                        this.elements[j].cloneNode(true));
-                }
-            }
-        }
-        */
+         for (j = 0; j < len2; j++) {
+         objs[i].appendChild(i === len1 - 1 ?
+         this.elements[j] :
+         this.elements[j].cloneNode(true));
+         }
+         }
+         }
+         */
 
         appendTo: function (selector) {
             var /*objs = rickH(selector), */ // 这里是假定是字符串，最后得到的是伪数组，
@@ -176,8 +233,8 @@
             for (i = 0; i < len1; i++) {
                 for (j = 0; j < len2; j++) {
                     objs[i].appendChild(i === len1 - 1 ?
-                                            this[j] :
-                                            this[j].cloneNode(true));
+                        this[j] :
+                        this[j].cloneNode(true));
                 }
             }
         }
@@ -222,18 +279,7 @@
 
 
 
-/*
-* obj.elements
-* 特点就是数据都在elements中
-* 方法与它并列，也就是说方法与数据分离了
-*
-* 这样的组织方式管理非常方便
-* 但是在给予它的开发变得每次都要使用elements，很繁琐
-*
-* 对照 jquery
-* 数据都是直接存储到this中，也就是说将jq对象看做一个伪数组
-* 同时提供了很多的方法
-* */
+
 
 
 
