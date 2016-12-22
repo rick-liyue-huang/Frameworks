@@ -129,7 +129,16 @@
             return arr;
         },
 
-        push: push
+        push: push,
+
+        firstChild: function (dom) {
+            var node = dom.childNodes[i], i, l = dom.childNodes.length;
+            for (i = 0; i < l; i++) {
+                if (node.nodeType === 1) {
+                    return node;
+                }
+            }
+        }
 
     });
 
@@ -226,20 +235,63 @@
 
         appendTo: function (selector) {
             var /*objs = rickH(selector), */ // 这里是假定是字符串，最后得到的是伪数组，
-                objs = selector,  // 这里如果参数就是DOM数组
+                objs = rickH(selector),  // 这里如果参数就是DOM数组
                 i, j,
                 len1 = objs.length,
-                len2 = this.length;
+                len2 = this.length,
+                arr = [], node;
             for (i = 0; i < len1; i++) {
                 for (j = 0; j < len2; j++) {
-                    objs[i].appendChild(i === len1 - 1 ?
+
+                    node = i == len1 - 1 ?
                         this[j] :
-                        this[j].cloneNode(true));
+                        this[j].cloneNode(true);
+                    arr.push(node);
+                    objs[i].appendChild(node);
                 }
             }
+            return rickH(arr);  // 解决了 链式编程
+        },
+
+        //回顾 jq, $('body').append('<div></div>'),
+        append: function (selector) {
+            rickH(selector).appendTo(this);
+            return this;
+        },
+
+
+        prependTo: function (selector) {
+            // this 加入到 selector 最前面
+        //    父元素.insertBefore(新元素， 参考元素)
+            var objs = rickH(selector),
+                i, j,
+                len1 = this.length,
+                len2 = objs.length,
+                arr = [], node;
+            for (i = 0; i < len2; i++) {
+                for (j = 0; j < len1; j++) {
+                    node = i === len2 - 1 ?
+                        this[j] :
+                        this[j].cloneNode(true);
+                    // this[j] 加到 objs[i] 里面的前面
+                    arr.push(node);
+                    objs[i].insertBefore(node, rickH.firstChild(objs[i]));
+                }
+            }
+            return rickH(arr);
+        },
+
+        prepend: function (selector) {
+
+        },
+
+        insertAfter: function () {
+
+        },
+
+        after: function (selector) {
+
         }
-
-
 
 
     });
@@ -251,9 +303,15 @@
     var select = function (selector) {
         // 简单写法
         var first = selector.charAt(0);
-        var arr = [];
+        var arr = [], node;
         if (first === '#') {
-            arr.push.call(arr, document.getElementById(selector.slice(1)));
+            node = document.getElementById(selector.slice(1));
+            if (node) {
+                arr.push.call(arr, node);
+            } else {
+                return null;
+            }
+
         } else if (first === '.') {
             arr.push.apply(arr, document.getElementsByClassName(selector.slice(1)));
         } else {

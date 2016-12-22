@@ -6,24 +6,78 @@
     <!--<script src="4.2.js"></script>-->
     <!--<script src="4.3.js"></script>-->
     <script src="4.4.js"></script>
+    <style>
+        #login {
+            width: 540px;
+            height: 340px;
+            border: 1px solid red;
+            background-color: gray;
+            margin: 100px auto;
+            padding: 30px ;
+        }
+    </style>
 </head>
 <body>
-<div></div>
-<div></div>
-<div></div>
+<!--<div></div>-->
+<!--<div></div>-->
+<!--<div></div>-->
+
+<input type="button" value="login" id="loginBtn">
 <script>
 //    RH('<p>this is paragraph</p>').appendTo('div');
 
-    var temp = RH('div'); // length : 3
-    var temp1 = RH(); // prototype length 0
+//    var temp = RH('div'); // length : 3
+//    var temp1 = RH(); // prototype length 0
 
 //RH('<p>this is paragraph</p>').appendTo('div');
 
-    // 验证
-    var o = rickH('div');
-    var o1 = rickH(o[0]);
-    var o2 = rickH([o[0]]);
-    var o3 = rickH(o);
+//    // 验证
+//    var o = rickH('div');
+//    var o1 = rickH(o[0]);
+//    var o2 = rickH([o[0]]);
+//    var o3 = rickH(o);
+
+//    验证框架的方法
+    RH('#loginBtn')[0].onclick = function () {
+
+        if (RH())
+//        alert('clicked');
+
+//        弹出一个登陆窗口
+        var ilogin = RH('<div id="login"></div>');
+        ilogin.appendTo('body');
+    };
+
+    rickH.each(RH('<div></div>').appendTo('div'), function (i, v) {
+        this.className = 'c';
+    });
+
+    RH('div').each(function () {
+        this.className = 'c';
+    }); // 加入 each方法以后可以这么用。
+
+//    RH('.c').remove().appendTo('#dv');
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
