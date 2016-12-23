@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #dv {
+            width: 100px;
+            height: 30px;
+            border: 1px solid red;
+            margin: 100px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dv"></div>
+<script>
+
+    /*
+    *  传统的事件对象，
+    *  什么是事件对象 --- 事件对象有什么用 e. 事件的处理有许多信息和数据，这些数据都放入到事件对象中，因此凡是和事件有关的数据都查看事件对象
+    *
+    *  如何访问事件对象，
+    *  IE： window.event
+    *  chrome: 事件处理函数的参数
+    *
+    *
+    * */
+
+    var id = document.getElementById('dv');
+    id.onclick = function (event) {
+//        console.log(event);
+
+        event = event || window.event;
+
+//        var _ = 0; // 用于IE调试
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

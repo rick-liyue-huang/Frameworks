@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="4.6.js"></script>
+</head>
+<body>
+
+
+<script>
+    /*
+    * 人发出一个行为，节点标签注册了一个事件处理程序
+    * 节点会调用事件处理程序
+    * */
+    /* 事件内部的处理程序
+    click() {
+        if onclick != null {
+            if (onclick != false) {
+                // 默认行为
+            }
+        }
+    }
+
+    */
+
+    rickH.fn.extend({
+        click: function (fn) {
+            // 要给每一个DOM元素添加事件处理程序 fn
+            this.each(function () { // 这里的this 是伪数组
+//                this.onclick = fn; // 这里的this是 DOM元素
+
+                if (this.addEventListener) {
+                    this.addEventListener('click', fn);  // 处理多个事件
+                } else {
+                    this.attachEvent('click', fn);
+                }
+
+
+            });
+            return this;
+        },
+
+        on: function (type, callback) {
+            this.each(function (i) {
+
+                if (this.addEventListener) {
+                    this.addEventListener(type, callback);
+                } else {
+                    this.attachEvent('on' + type, callback);
+                }
+
+            });
+
+            return this; // 当前对象
+        },
+
+        mouseover: function (fn) {
+            return this.on('mouseover', fn);
+        },
+
+        off: function () {
+            this.each(function () {
+                this.removeEventListener('on' + type, callback);
+            });
+            return this;
+        },
+
+
+    });
+    // 其他的事件 click, mouseouver, mousemove, mousedown, mouseup, keydown, keyup
+
+    rickH.each( ("click,mouseouver,mousemove,mousedown,mouseup,keydown,keyup").split(','),
+                    function (i, v) {
+                        rickH.fn[v] = function (fn) {
+                            this.on(v, fn);
+                        }
+                    });
+
+    // 变形
+    var list = ['click', 'mouseover'];
+    for (var i = 0; i < list.length; i++) {
+        rickH.fn[list[i]] = function (fn) {
+            return  this.on(list[i], fn);
+        }
+    }
+
+
+    //
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

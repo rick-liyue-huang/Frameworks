@@ -12,6 +12,16 @@
         concat = arr.concat,
         version = 'rickH ' + 1 * new Date();
 
+
+    //处理load的重复调用。
+    // var loadEvent = [];
+    //
+    // window.onload = function () {
+    //     for (var i = 0; i < loadEvent.length; i++) {
+    //         loadEvent[i]();
+    //     }
+    // };
+
     var rickH = function rickH(selector) {
         return new rickH.fn.init(selector);
     };
@@ -64,10 +74,10 @@
 
                 if (selector.charAt(0) === '<') {
                     // this.elements = parseHTML(selector);
-                    rickH.push.apply(this, parseHTML(selector));
+                    rickH.push.apply(this, rickH.parseHTML(selector));
                 } else {
                     // this.elements = select(selector);
-                    rickH.push.apply(this, select(selector));
+                    rickH.push.apply(this, rickH.select(selector));
                     this.selector = selector; // 表明只要有selector 属性的对象就是 rickH 对象
                 }
                 return this;
@@ -128,6 +138,30 @@
         },
         isDOM: function (obj) {
             return !!obj.nodeType;
+        },
+        
+        isFunction: function (selector) {
+            // window.onload = selector;
+            // if (window.addEventListener) {
+            //     window.addEventListener('load', selector);
+            // } else {
+            //     window.attachEvent('onload' + selector);
+            // }
+
+            // 如果为了累加事件，就是在最终执行的时候，将原来绑定的事件按照先后的顺序依次执行
+            // loadEvent.push(selector); 这是第一种方式
+
+            //这是第二种调用方式， 类似于递归
+            var oldFn = window.onload;
+            if (typeof oldFn === 'function') {
+                window.onload = function () {
+                    oldFn();
+                    selector();
+                }
+            } else {
+                window.onload = selector;
+            }
+
         }
 
     });
@@ -357,7 +391,7 @@
         //jq 的 remove $('').remove(); 就是删除自己
         remove: function () {
             var arr = [];
-        //    将this 删除
+            //    将this 删除
             this.each(function () { // 这里的this 是 RH 对象， this 是伪数组，伪数组中的每一个元素就是dom 对象
                 // this.parentNode.removeChild(this); // 这里的this是 DOM对象
 
@@ -368,12 +402,12 @@
 
 
             /*
-            var i, len = this.length;
-            for (i = 0; i < len; i++) {
-                this[i].parentNode.removeChild(this[i]);
-            }
-            return this;
-            */
+             var i, len = this.length;
+             for (i = 0; i < len; i++) {
+             this[i].parentNode.removeChild(this[i]);
+             }
+             return this;
+             */
 
         }
 
@@ -418,6 +452,12 @@
         }
         return arr;
     };
+
+    rickH.extend({
+
+        select: select,
+        parseHTML: parseHTML
+    });
 
 
 //    对外红开

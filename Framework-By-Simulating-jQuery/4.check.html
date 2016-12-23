@@ -6,6 +6,8 @@
     <!--<script src="4.2.js"></script>-->
     <!--<script src="4.3.js"></script>-->
     <script src="4.4.js"></script>
+    <script src="4.6.js"></script>
+    <script src="Sizzle.js"></script>
     <style>
         #login {
             width: 540px;
@@ -57,6 +59,13 @@
     }); // 加入 each方法以后可以这么用。
 
 //    RH('.c').remove().appendTo('#dv');
+
+    RH('#dv').next().each(function (i, v) {
+        this.style.border = '1px solid red';
+    });
+
+
+    rickH.select = Sizzle; // 这是综合sizzle and select， 只要具有sizzle 就使用 sizzle， 否则就是用 自带的 select方法
 </script>
 </body>
 </html>
