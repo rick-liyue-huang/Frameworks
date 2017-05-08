@@ -1,59 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+ <html lang="en">
+ <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<script>
+    <title>Document</title>
+ </head>
+ <body>
+    
+    <script>
+        // fisrt of all, set the compatible className function, 
+        /*
+            1. how to confirm the browsers support the getElementsByClassName() method.
+            In the global scope, I provide a  'support' method, which binds the property whose name is same as the method name, and return the boolean value.
+            When browers load the js file, it will test the browser capability, and return the result as boolean value. we will use the 'support' object on browser capability.
+        */
 
-    //    首先兼容className 函数
-    /*
-     * 1.如何判断浏览器不支持该方法
-     * 在全局作用域中（最终都要变成沙箱）提供一个叫做support对象
-     * 里面提供所有的与方法名相同的属性，值均为boolean
-     * 在浏览器加载js的开始时候，就进行能力判断，将与方法名相同属性作为真与假进行存储
-     * 那么凡是涉及到能力检测的时候就直接使用support即可
-     * 2. 如何实现新方法
-     * */
-//    var support = {};
-//    support.getElementsByClassName = !!document.getElementsByClassName;
-//    if (support.getElementsByClassName) {
-//        return node.getElementsByClassName(className);
-//    } else {
-//
-//    }
+        let support = {}; // set the support object, and the methods are the property of 'support'
 
-//    => 进一步能力检测的实现逻辑
-    var support = {};
-    support.getElementsByClassName = !!document.getElementsByClassName;
-    support.getElementsByClassName = (function () {
-        var isExist = !!document.getElementsByClassName;
-        if (isExist && typeof document.getElementsByClassName == 'function') {
+        support.getElementsByClassName = !!document.getElementsByClassName; // transfer to boolean value.
+        support.getElementsByClassName = (() => {
+            let isExist = !!document.getElementsByClassName;
 
-            // 自己创建一些元素，并且加上class属性，看是否可以获得到加上的所有的元素
-            var div = document.createElement('div'),
-                    divWithClass = document.createElement('div');
-            divWithClass.className = 'c';
-            div.appendChild(divWithClass);
-            return div.getElementsByClassName('c')[0] === divWithClass;
+            // if getElementsByClassName is existed
+            if (isExist && typeof document.getElementsByClassName === 'function') {
+
+                // I will create some elements, and add class property, and check whether can get the elements
+                let div = document.createELement('div'),
+                    divWithClass = document.createELement('div');
+
+                divWithClass.className = 'c';
+                return div.getElementsByClassName('c')[0] == divWithClass; // return true
+            }
+            // otherwise return false.
+            return false;
+        })();
+
+        if (support.getElementsByClassName) {
+            console.log('support classname');
+        } else {
+            console.log('no support');
         }
-        return false;
-    })();
 
-    if (support.getElementsByClassName) {
-        console.log('support classname');
-    } else {
-        console.log('no support');
-    }
+        
+    </script>
+ </body>
+ </html> 
 
 
 
-    //    $('p .dv') === $('.dv', 'p') ===> $('.dv', document.body) ==> $('.dv', $('body'))
 
-    // 类比出来  get (selector, context, results);   context 就是 上下文
 
-    // get 函数的优化，加入上下文
-</script>
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

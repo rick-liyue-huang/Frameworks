@@ -1,238 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        div, p {
-            width: 100px;
-            height: 100px;
-            border: 1px solid red;
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-<div id="dv"></div>
-<div class="div"></div>
-<div class="div"></div>
-<p></p>
 
-<script>
-
-    // the basic method without function
-    /*
-    var divs = document.getElementsByTagName('div');
-    var ps = document.getElementsByTagName('p');
-    var i;
-    for (i = 0; i < divs.length; i++) {
-        divs[i].style.backgroundColor = 'yellow';
-    }
-    for (i = 0; i < ps.length; i++) {
-        ps[i].style.backgroundColor = 'orange';
-    }
-    */
-
-
-    // the basic method with function
-    /*
-    var getTag = function (tagName) {
-        return document.getElementsByTagName(tagName);
-    };
-    var divs = getTag('div');
-    var ps = getTag('p');
-    var i;
-    for (i = 0; i < divs.length; i++) {
-        divs[i].style.backgroundColor = 'yellow';
-    }
-    for (i = 0; i < ps.length; i++) {
-        ps[i].style.backgroundColor = 'orange';
-    }
-    */
-
-    // for loop function - each()
-//    var arr = [1, 4, 5, 3, 7, 9], i, index = -1, sum = 0, max = arr[0], min = arr[0];
-
-    /*
-    for (i = 0; i < arr.length; i++) {
-        sum += arr[i];
-    }
-    console.log(sum);
-
-    for (i = 0; i < arr.length; i++) {
-        if (max <= arr[i]) {
-            max = arr[i];
-        }
-    }
-    console.log(max);
-
-    for (i = 0; i < arr.length; i++) {
-        if (min >= arr[i]) {
-            min = arr[i];
-        }
-    }
-    console.log(min);
-
-    for (i = 0; i < arr.length; i++) {
-        if (arr[i] === 5) {
-            index = i;
-            break;
-        }
-    }
-    console.log(i);
-
-    */
-
-//    => here, fn.call(arr[i], ..) will let the arr[i] call the fn method,
-    // so will can use "this" to represent arr[i]
-
-    var each = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-            if (fn.call(arr[i], i, arr[i]) === false) {
-                break;
+    <!DOCTYPE html>
+     <html lang="en">
+     <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <style type="text/css">
+            div, p {
+                width: 100px;
+                height: 100px;
+                border: 1px solid red;
+                margin: 10px 0;
             }
-        }
-    };
+        </style>
+     </head>
+     <body>
+        <div id="dv"></div>
+        <div class="div"></div>
+        <div class="div"></div>
+        <p></p>
+        
+        <script>
+            
+            /*
+                Here, I will encap a framework, which is similar as jQuery.js --- rickHuang.js
+
+                I should complete the following functions:
+                1. selector module, used to select element by 'id', 'classname', 'tagname';
+                2. dom module, used to select elements by dom;
+                3. event module, which deal with the event;
+                4. attribute module, used to deal with the element attribute;
+                5. style moduel, used to deal with element style;
+                6. animation module, used to deal with element animation;
+                7. encap all modules 
+            */ 
+
+            // from 1.1 -1.3, I have the 'get' function used to deal with getting the selectors
 
 
+            let get = function(selector, results) {
 
-//    so the upon for loop can change to..
-    /*
-    each(arr, function (i, v) {
-        sum += v;
-    });
-    console.log(sum);
+                results = results || [];
 
-    each(arr, function (i, v) {
-        if (max <= v) {
-            max = v;
-        }
-    });
-    console.log(max);
+                let rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/, 
+                    m = rquickExp.exec(selector);
 
-    each(arr, function (i, v) {
-        if (min >= v) {
-            min = v;
-        }
-    });
-    console.log(min);
+                if(m) {
 
-    each(arr, function (i, v) {
-        if (v == 5) {
-            index = i;
-        }
-    });
-    console.log(index);
+                    if (m[1]) {
+                        results = getId(m[1], results);
+                    } else if (m[2]) {
+                        results = getClass(m[2], results);
+                    } else if (m[3]) {
+                        results = getTag(m[3], results);
+                    } else if (m[4]) {
+                        resutls = getTag(m[4], results);
+                    }
+                }
+                return results;
+            };
 
-    */
+            let each = function(arr, fn) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (fn.call(arr[i], i, arr[i]) === false) {
+                        break;
+                    }
+                }
+            };
 
-    // modify the getTag method, to transfer one more arguments
-    var getTag = function (tagName, results) {
-        results = results || [];
-        results.push.apply(results, document.getElementsByTagName(tagName));
-        return results;
-    };
+            let getId = function(idName, results) {
+                results = results || [];
+                results.push(document.getElementById(idName));
+                return results;
+            };
 
-    /*
-    var list = getTag('div');
-    list = getTag('p', list);
-    each(list, function (i, v) {
-        this.style.backgroundColor = 'pink';
-    });
-    */
+            let getClass = function(className, results) {
+                results = results || [];
+                results.push.apply(results, document.getElementsByClassName(className));
+                return results;
+            };
 
-    // get the getId and getClass methods
-    var getId = function (idName, results) {
-        results = results || [];
-        results.push(document.getElementById(idName));
-        return results;
-    };
+            let getTag = function(tagName, results) {
+                results = results || [];
+                results.push.apply(results, document.getElementsByTagName(tagName));
+                return results;
+            };
 
-    var getClass = function (className, results) {
-        results = results || [];
-        results.push.apply(results, document.getElementsByClassName(className));
-        return results;
-    };
 
-    // compose the get method
-    var get = function (selector, results) {
-        results = results || [];
+            each(get('#dv'), function () {
+                console.log(this);
+                this.style.backgroundColor = 'skyblue';
+            });
 
-        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
-                m = rquickExp.exec(selector);
+            each(get('.div'), function () {
+                console.log(this);
+                this.style.backgroundColor = 'yellow';
+            });
 
-        if (m) {
-            if (m[1]) {
-                results = getId(m[1], results);
-            } else if (m[2]) {
-                results = getClass(m[2], results);
-            } else if (m[3]) {
-                results = getTag(m[3], results);
-            } else if (m[4]) {
-                results = getTag(m[4], results);
+            each(get('p'), function () {
+                this.style.backgroundColor = 'purple';
+            });
+
+            // used to confirm the browser capability.
+            let support = {};
+
+            support.getElementsByClassName = !!document.getElementsByClassName;
+
+            support.getElementsByClassName = (function() {
+                let isExist = !!document.getElementsByClassName;
+
+                if (isExist && typeof document.getElementsByClassName === 'function') {
+
+                    let div = document.createElement('div');
+                    let divWithClass = document.createElement('div');
+
+                    divWithClass.className = 'c';
+                    div.appendChild(divWithClass);
+                    return div.getElementsByClassName('c') === divWithClass;
+                }
+                return false;
+            })();
+
+            if (document.getElementsByClassName) {
+                console.log('support classname method'); //support classname method
+            } else {
+                console.log('no support');
             }
-        }
-        return results;
-    };
 
 
-    each(get('#dv'), function (i, v) {
-        this.style.backgroundColor = 'orange';
-    });
-    each(get('.div'), function (i, v) {
-        this.style.backgroundColor = 'pink';
-    });
-    each(get('p'), function () {
-        this.style.backgroundColor = 'skyblue';
-    });
-
-    // focus on the getElementsByClassName(), some browsers has this method, and also need consider the search engin
-//    capability detection
-    /*
-     * ,
-     * named support, and this support object will stop the engine search the special method in the prototype chain. If we
-     * always search along the prototype chain, it will affect the browser performance.
-     * */
-
-    var support = {}; // support is a object used to substitute the document element in DOM.
-    // under some circumstance. here we provide a object, named support,
-    // and this support object will stop the engine search the special method in the prototype chain.
-    // If we always search along the prototype chain, it will affect the browser performance.
-    support.getElementsByClassName = !!document.getElementsByClassName;
-
-    support.getElementsByClassName = (function () {
-        var isExist = !!document.getElementsByClassName;
-        if (isExist && typeof document.getElementsByClassName == 'function') {
-
-            var div = document.createElement('div'),
-                divWithClass = document.createElement('div');
-            divWithClass.className = 'c';
-            div.appendChild(divWithClass);
-            return div.getElementsByClassName('c') === divWithClass;
-        }
-        return false;
-    })();
-
-    if (document.getElementsByClassName) {
-        console.log('support className method');
-    } else {
-        console.log('no support');
-    }
-
-
-
-
-
-
-
-</script>
-</body>
-</html>
-
-
-
-
-
-
+        </script>
+     </body>
+     </html> 
 
 
 
