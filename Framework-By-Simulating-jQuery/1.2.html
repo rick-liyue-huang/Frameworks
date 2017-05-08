@@ -10,40 +10,99 @@
             border: 1px solid red;
             margin: 10px 0;
         }
+
+        .bd {
+            background: yellow;
+        }
+
+        .bc {
+            background: orange;
+        }
+
+        .bt {
+            border: 1px solid blue;
+        }
+
+        .bdiv {
+            background: green;
+        }
     </style>
 </head>
 <body>
 
-    <div></div>
-    <div></div>
+    <div id="dv"></div>
+    <div class="cl"></div>
     <p></p>
+    <p class="cl"></p>
+    <span>span111</span>
+    <span class="cl">span222</span>
+
+    
 <script>
     /*
-    * 修改get方法获得基本选择器
+    * modify the 'get' method to get the basic selector in .html file
     *
-    * 单独编写一个函数，在函数中如果获得id，后者tag调用相对的方法
+    * encapsulate the 'getId', 'getClass', 'getTag' functions.
+
+    * and then encap one 'get' function to call the upper functions inside.
     * */
 
-    var getId = function (id, results) {
+    // getId func
+    let getId = function(id, results) {
         results = results || [];
         results.push(document.getElementById(id));
         return results;
     };
 
-    var getClass = function (className, results) {
+    // dv is an array, so I get the first element.
+    let dv = getId('dv')[0];
+    // console.log(dv);
+    //  test its working.
+    // dv.setAttribute('class', 'bd'); 
+    // dv.classList.add('bd');
+
+    // getClass func
+    let getClass = function(className, results) {
         results = results || [];
-        results.push.apply(results, document.getElementsByClassName(className));
+        // results.push(document.getElementsByClassName(className)); // will get the pseudo-array
+        results.push.apply(results, document.getElementsByClassName(className)); // get the true array results
         return results;
     };
 
-    var get = function (selector, results) {
+    let cl = getClass('cl'); // []
+    console.log(cl);
+    for (let i = 0; i < cl.length; i++) {
+        // console.log(cl[i]);
+        cl[i].classList.add('bc');
+    }
+
+    // getTag func
+    let getTag = function(tagName, results) {
         results = results || [];
-        var rquickExpr = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
-//        var rquickExpr = /^(?:   #([\w-]+)  | \.([\w-]+)   |     ([\w]+)  |   \*)$/,
-             m = rquickExpr.exec(selector);
+        results.push.apply(results, document.getElementsByTagName(tagName));
+        return results;
+    };
+
+    let tl = getTag('span');
+    console.log(tl);
+    for (let i = 0; i < tl.length; i++) {
+        // tl[i].setAttribute('class', 'bt'); // clear the previous classname
+        tl[i].classList.add('bt'); // add the new classname;
+    }
+
+    // encap the 'get' function to put the upper functions inside.
+
+    let get = function (selector, results) {
+        results = results || [];
+
+        let rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/;
+        //        var rquickExpr = /^(?:   #([\w-]+)  | \.([\w-]+)   |     ([\w]+)  |   \*)$/,
+
+        let m = rquickExp.exec(selector);
 
         if (m) {
-            if(m[1]) {
+
+            if (m[1]) {
                 results = getId(m[1], results);
             } else if (m[2]) {
                 results = getClass(m[2], results);
@@ -52,22 +111,46 @@
             } else if (m[4]) {
                 results = getTag(m[4], results);
             }
-
         }
 
-//        if (m) {
-//            if(m[1]) {
-//                results = getId(m[1], results);
-//            } else if (m[2]) {
-//                results = getClass(m[2], results);
-//            } else {
-//                results = getTag(m[3] || "*", results);
-//            }
-//
-//        }
+        /*
 
-        return results; // 如果没有匹配到，就直接返回原来的结果
+            if (m) {
+               if(m[1]) {
+                   results = getId(m[1], results);
+               } else if (m[2]) {
+                   results = getClass(m[2], results);
+               } else {
+                   results = getTag(m[3] || "*", results);
+               }
+
+            }
+
+        */
+        
+
+        return results;
     }
+
+    let getArr = get('#dv');
+    console.log(getArr);
+    getArr[0].setAttribute('class', 'bt');
+
+    let getArr2 = get('div');
+    console.log(getArr2);
+    for (let i = 0; i < getArr2.length; i++) {
+        getArr2[i].setAttribute('class', 'bdiv');
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

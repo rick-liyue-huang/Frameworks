@@ -8,31 +8,29 @@
 <body>
 <script>
 
-    /*
-    *
-    * 如果想遍历一个数组，是要对数组做什么事情？
-    * 凡是涉及到遍历才能完成的事情都应该可以做 （修改，查询）
-    *
-    * */
+    // from now I will capsulate the full function step by step
 
-    var arr = [1, 2, 3, 4, 5];
+    // 1.1, 
+
+    let arr = [11, 4, 15, 37, 8];
 
     /*
-    * 1.求和
-    * 2.求最大值
-    * 3.求最大值
-    * 4.查找3
-    * 5.查找5
+    * 1.get the Sum
+    * 2.get the maximum number
+    * 3. get the minimum number
+    * 4. find the index
+    * 
     * */
-    var sum = 0;
-    for (var i = 0; i < arr.length; i++) {
+    
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
         sum += arr[i];
     }
     console.log(sum);
 
     // 2
-    var max = arr[0];
-    for (var i = 0; i < arr.length; i++) {
+    let max = arr[0];
+    for (let i = 0; i < arr.length; i++) {
         if (arr[i] >= max) {
             max = arr[i];
         }
@@ -40,8 +38,8 @@
     console.log(max);
 
     // 3.
-    var min = arr[0];
-    for (var i = 0; i < arr.length; i++) {
+    let min = arr[0];
+    for (let i = 0; i < arr.length; i++) {
         if (arr[i] <= min) {
             min = arr[i];
         }
@@ -49,77 +47,76 @@
     console.log(min);
 
     // 4
-    var find1 = -1;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === 3) {
+    let find1 = -1;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === 15) {
             find1 = i;
             break;
         }
     }
-    console.log(i);
+    console.log(find1); // 2
 
     //5.
-    var find2 = -1;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === 5) {
+    let find2 = -1; // asume we cannot find it
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === 37) {
             find2 = i;
             break;
         }
     }
-    console.log(i);
+    console.log(find2); // i = 3
 
 
-//
-    var each = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-//           var res = fn(i, arr[i]);
-            if (fn.call(arr[i], i, arr[i]) === false) {
-                break;
-            }
-        }
-    };
-    each(arr, function (i, v) {
-        sum += v;
-    });
-
-    var max = arr[0];
-    each(arr, function (i, v) {
-        if (max <= v) {
-            max = v;
-        }
-    });
-
-
-//    进一步封装， 因为for 无法跳出
-    var index = -1;
-    each(arr, function (i, v) {
-//        if (v === 3) {
-//            index = i;
-//            return false;
-//        }
-        console.log(this);
-
-    });
-
-
-    // 对照jQuery
-    $.each(arr, function (i, v) {
+/*. here we constract with the jquery function, */ 
+   $.each(arr, function (i, v) {
 //        console.log(i + ',' + v);
 //        if (v == 2) {
 //            return false;
 //        }
-        console.log(this);
+        console.log(this); //get the elements in the array. 
      });
 
 
-//    优化each  方法
-    var each = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-            if (fn.call(arr[i], i, arr[i]) === false) {
+
+
+// through the upper examples, I can get capsulate one function, to put the for loop in the function.
+    let each = function (arr, fn) {
+        for (let i = 0; i < arr.length; i++) {
+            if (fn.call(arr[i], i, arr[i]) === false) { // the arguments i, and arr[i]
                 break;
             }
         }
     };
+
+    each(arr, (i, v) => { // here I match the function each() i => i, v => arr[i]
+        sum += v;
+    });
+    console.log(sum);
+
+    each(arr, (i, v) => {
+        if (v >= max) {
+            max = v;
+        }
+    });
+    console.log(max);
+
+    each (arr, (i, v) => {
+        if (v <= min) {
+            min = v;
+        }
+    });
+    console.log(min);
+
+    let index = -1;
+    each(arr, (i, v) => {
+        if (v === 37) {
+            index = i;
+        }
+    });
+    console.log(index); // 3
+
+
+
 
 </script>
 </body>
