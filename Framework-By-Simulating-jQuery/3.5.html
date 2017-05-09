@@ -8,14 +8,12 @@
 
 <script>
 
-    //真正的框架封装,
-
-//    构造函数
+    
     var rickH = function (selector) {
         return new rickH.fn.init(selector);
     };
 
-//    核心原型
+//    core prototype
     rickH.fn = rickH.prototype = {
         constructor: rickH,
         init: function (selector) {
@@ -24,7 +22,7 @@
     };
     rickH.fn.init.prototype = rickH.prototype;
 
-//    为了可扩展
+//    for extension
     rickH.extend = rickH.fn.extend = function () {
 
     };

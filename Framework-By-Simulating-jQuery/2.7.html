@@ -41,108 +41,117 @@
 <script>
 
     /*
-     * get('selector', 父元素，results); -> 在父元素里面实现这个功能, 这个父元素就是向下文
-     *
-     * 如果要实现这个功能， 应该先找到父元素。
-     * 1.首先假定 父元素 就是 dom 元素
-     * 首先应该考虑修改查找元素的三个get方法，然后在考虑总的 get 方法
-     * 注意还是将 results 方法后面， 因为 results 是可以省略的
-     *
-     *
-     *
-     * 2. 假定 context 是一个dom数组，需要做一个遍历操作
-     *
-     * 3. 如果 context 是一个 字符串选择器 ，即 '.c' 而不是一个已经设置好的 DOM元素或者数组
-     *
-     * 4. 选择器字符串 --- 组合选择器
-     * 在 jq中支持哪些选择器
-     *  基本选择器 id, class, tag
-     *  复合选择器
-     *  组合选择器 ，
-     *  后代选择器 空格 >
-     *  兄弟选择器 ~ ， +，
-     *  过滤器 :eq(), :not(), :even(), :first
-     *  属性过滤器： [k=v]
-     *  表单过滤器： form， button， :select,
-     *  内容过滤器：
-     *
-     *  我们先考虑 组合选择器
-     *  无论选择器字符串多么复杂，都是首先处理逗号，
-     *  将其分解成几个简单的部分，然后再一一处理
-     *  而分的的每一个选择器都是按照从左往右的形式过滤
-     *  都是先处理一个选择器，得到的结果在后面的选择器处理
-     *
-     * */
+    * get('selector', parentElement，results); -> here 'context' is the parentEle
+    *
+    * 
+    * 1.firstly, we assume that the parentEle is the dom element
+    *
+    * 2. if the context is the array, we should do the loop through
+    * 
+    * 3. if context is 'string' type, such as '.c', we transfer it by 'get()'
+    * 
+    * 4. combination selectors 
+         'blank', '>' '~'....
+         I will deal with the combine selector ',', because ',' is the most basic one.
+      
+      5. 5. we will deal with the some more complex selectors such as '.dv .c1, .c2'
+         
+    * */
 
-    var getTag = function (tagName, context, results) {
+    // used to confirm the browser capability.
+    let support = {};
+
+    support.getElementsByClassName = !!document.getElementsByClassName;
+
+    support.getElementsByClassName = (function() {
+        let isExist = !!document.getElementsByClassName;
+
+        if (isExist && typeof document.getElementsByClassName === 'function') {
+
+            let div = document.createElement('div');
+            let divWithClass = document.createElement('div');
+
+            divWithClass.className = 'c';
+            div.appendChild(divWithClass);
+            return div.getElementsByClassName('c') === divWithClass;
+        }
+        return false;
+    })();
+
+    if (document.getElementsByClassName) {
+        console.log('support classname method'); //support classname method
+    } else {
+        console.log('no support');
+    }
+
+
+    let each = function(arr, fn) {
+        for (let i = 0; i < arr.length; i++) {
+            if (fn.call(arr[i], i, arr[i]) === false) {
+                break;
+            }
+        }
+    };
+
+    // define a function to clear blank
+    let rickTrim = function(str) {
+        if (String.prototype.trim) {
+            return str.trim();
+        } else {
+            return str.replace(/^\s+|\s+$/g, ''); // clear the blank
+        }
+    };
+
+    let getTag = function(tagName, context, results) {
         results = results || [];
-
         results.push.apply(results, context.getElementsByTagName(tagName));
         return results;
-    };
+    }
 
-
-    var getId = function (idName, results) {
+    let getId = function (idName, results) {
         results = results || [];
-
-        results.push(document.getElementById(idName));
+        results.push.apply(document.getElementById(idName));
         return results;
     };
 
-    var getClass = function (className, context, results) {
+    let getClass = function(className, context, results) {
         results = results || [];
-
         if (document.getElementsByClassName) {
             results.push.apply(results, context.getElementsByClassName(className));
         } else {
+            let tempArr = [], i;
 
-            var tempArr, i;
             for (i = 0; i < tempArr.length; i++) {
-//                if ( (' ' + tempArr[i].className + ' ').indexOf(' ' + className + ' ') != -1 ) {
-//                    results.push(tempArr[i]);
-//                }
-
-// 换一种思路： tempArr[i] 就是一个元素，判断该元素的className 中是否包含传入的参数
-                // className.
-//            比如说 元素是 <div class='c1 c2 c3'></div>
-//            因此使用传统的处理方法
-
-//                注意 classname属性必须验证非空
-                var list = tempArr[i].className.split(' ');
-                for (var j = 0; j < list.length; j++) {
+                // we do some change here
+                let list = tempArr[i].className.split(' ');
+                for (let j = 0; j < list.length; j++) {
                     if (list[j] === className) {
                         results.push(tempArr[i]);
                         break;
                     }
                 }
             }
-
-
-
         }
         return results;
+    }
 
-    };
-
-    var get = function (selector, context, results) {
+    let get = function (selector, context, results) {
         results = results || [];
         context = context || document;
-        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+        let rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
             m = rquickExp.exec(selector);
 
-        // 对 context 作遍历
-
-        // 对if 内容放入到循环中
-
+        // here we assume the context is array
         if (m) {
-            if (context.nodeType) { // 表示是一个元素
+            if (context.nodeType) { // 2. means that context is one element, 
                 context = [context];
             }
+
             if (typeof context === 'string') {
-                context = get(context); // 将字符串变为dom 元素
+                context = get(context); // 3. transfer the string to dom elements
             }
 
-            each(context, function (i, v) {
+            each(context, function(i, v) {  // v => context
                 if (m[1]) {
                     results = getId(m[1], results);
                 } else if (m[2]) {
@@ -150,121 +159,71 @@
                 } else if (m[3]) {
                     results = getTag(m[3], v, results);
                 } else if (m[4]) {
-                    results = getTag(m[4], this, results);
+                    results = getTag(m[4], v, results);
                 }
-            });
-
+            })
         }
         return results;
-
-    };
-
-    var each = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-            if (fn.call(arr[i], i, arr[i]) === false) {
-                break;
-            }
-        }
     };
 
 
-    // 将上下文参数变为选择器字符串， context -> '.c3',
-    //    这里面 context 不再是 现成的 dom 元素 或者 dom数组
-    //    也就是达到这样的形式
-    //    each (get('.c', '.c3'), function () {
-    //        this.style.backgroundColor = 'yellow';
-    //    });
 
-    //    而不是
-    //    each(get('.c', get('.c3')), function () {
-    //        this.style.backgroundColor = 'pink';
-    //    });
+    // 4. deal with the combination selector,  also means to deal with ','
 
-
-    var select = function (selector, context, results) {
+/*
+    let select = function(selector, context, results) {
 
         results = results || [];
 
-//        首先处理逗号 , 比如 '.c1, .c2'
-        var newSelectors = selector.split(','); // 得到一个数组   ['.c1', ' .c2']
+        // fisrtly, deal with ',' , such as '.c1, c2'
+        let newSelectors = selector.split(','); // will get an array ['.c1', ' .c2']
 
-//        一般不考虑两端的空格
-//        each(newSelectors, function (i, v) {
-//
-//            results.push.apply(results, get(myTrim(v), context));
-//        });
-        // 改写for in 循环
-        for (var k in newSelectors) {
-            var v = newSelectors[k]; // 0: '.c1' 1: ' .c2'
-            v = myTrim(v); // v.trim()
-            var list = get(v, context);
+        for (let k in newSelectors) {
+            let v = newSelectors[k]; // {0: '.c1' 1: ' .c2'}
+            v = rickTrim(v);
+
+            let list = get(v, context);
             results.push.apply(results, list);
 
-
         }
         return results;
-    };
 
+    }
 
-    // 我们接着考虑， 每一个逗号分开的元素不是基本元素而是组合元素，该怎么 例如 get('.dv .c', context)
-//    => list = get('.dv', context);
-//    list = get('.c', list); 这里是得到新结果，而是上下文context， 旨在list中的每一个元素的后代元素中找符合.c 的元素
+    */
 
-//    例如 get('s1 s2 s3 s4');
-//    ->
-//    list = get('s1');
-//    list = get('s2', list);
-//    list = get('s3', list);
-//    list = get('s4', list);
-
-
-//    例如 '.dv .c1, .c2'
-    var select1 = function (selector, context, results) {
+    // 5. we will deal with the some more complex selectors such as '.dv .c1, .c2'
+    let select1 = function (selector, context, results) {
         results = results || [];
 
-        var newSelectors = selector.split(',');
+        let newSelectors = selector.split(','); // ['.dv .c1', ' .c2']
 
-        each(newSelectors, function (i, v) {  // => ['.dv .c1', ' .c2']
+        each(newSelectors, function(i, v) {
 
-//            需要解析的就是 v 获得 this
-//            分割
-            var list = v.split(' ');
+            let list = v.split(' ') // ['.dv', ' .c1']
 
-//            context => list[0] -> list[1] -> list[length-1]
+            // context => list[0] -> list[1] -> list[length-1]
 
-            var c = context;
-            for (var i = 0; i < list.length; i++) {
-
-                if (list[i] === '') continue; // 防止 空字符串对后面产生影响
-                c = get(myTrim(list[i]), c);
-
-                // 如果list[i]是空字符，那么就是在c下面找空数据，是不会报错的
+            let c = context;
+            for (let i = 0; i < list.length; i++) {
+                if (list[i] === '') continue; // avoid the blank string ''
+                c = get(rickTrim(list[i]), c);
             }
 
             results.push.apply(results, c);
+
         });
 
         return results;
-    };
+    }
 
 
-
-    var myTrim = function (str) {
-        if (String.prototype.trim) {
-            return str.trim();
-        } else {
-            return str.replace(/^\s+|\s+$/g, ''); // 去掉头尾的空格
-
-        }
-    };
-
-
-    //    找出所有的.c1 和 .c2 元素 ， 加上背景色
-    //    get('.c1, .c2');
-    var list = select1('.c3 .c, .c2');
-    each(list, function () {
+    // test
+    let list = select1('.c3 .c, .c2');
+    each(list, function() {
         this.style.backgroundColor = 'green';
     });
+
 
 
 

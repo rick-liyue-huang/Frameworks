@@ -10,49 +10,52 @@
 <script>
 
     /*
-    * 真正的框架
+    * the true framework
     * */
-    var rickH = function (selector) {
+    
+    var rickH = function(selector) {
         return new rickH.prototype.init(selector);
-    };
+    }
 
 
-    //        因为方法的种类很多，需要注意分类
+    //        because so many methods, so classify them
     /*
-     * 选择： next, nextAll, find, children, filter
-     * dom: appendTo, prependTo, after
-     * 属性： attr, val, text, html
-     * 样式： css, addClass, hasClass, toggleClass
-     * 事件： click, on, mousedown
-     * 动画： show, hide, slideDown, animate
-     * 队列： ajax
-     * 插件： 。。。。。
+     * 'select': next, nextAll, find, children, filter
+     * 'dom': appendTo, prependTo, after
+     * 'attribute': attr, val, text, html
+     * 'style': css, addClass, hasClass, toggleClass
+     * 'event': click, on, mousedown
+     * 'animation': show, hide, slideDown, animate
+     * 'ajax': ajax
+     * 'plugin': 
      *
      * */
 
+     
     rickH.fn = rickH.prototype = {
-
         constructor: rickH,
-        init: function (selector) {
-            // .... if (typeof ... =string)
-        },
-        extend: function () {
+        init: function(selector) {
 
         },
-        appendTo: function (selector) {}
-    };
+        extend: function() {
 
-//    对象实例方法的添加，放到这里
+        },
+        appendTo: function(selector) {
+
+        }
+    }
+
+//    add methods on object instance
     rickH.fn.extend({
 
     });
 
-//    功能性方法 -- 给构造函数添加
+//   some functional methods on constructor
     rickH.extend({
 
     });
 
-    rickH.fn.init.prototype = rickH.prototype; // 使得两个原型链相同
+    rickH.fn.init.prototype = rickH.prototype; // make the init prototype is same as the rickH prototype.
 </script>
 </body>
 </html>

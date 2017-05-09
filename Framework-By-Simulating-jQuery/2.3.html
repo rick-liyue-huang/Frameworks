@@ -39,19 +39,19 @@
 <script>
 
     /*
-    * get('selector', 父元素，results); -> 在父元素里面实现这个功能, 这个父元素就是向下文
+    * get('selector', parentElement，results); -> here 'context' is the parentEle
     *
-    * 如果要实现这个功能， 应该先找到父元素。
-    * 1.首先假定 父元素 就是 dom 元素
-    * 首先应该考虑修改查找元素的三个get方法，然后在考虑总的 get 方法
-    * 注意还是将 results 方法后面， 因为 results 是可以省略的
+    * 
+    * 1.firstly, we assume that the parentEle is the dom element
     *
     *
     *
-    * 2. 假定 context 是一个dom数组，需要做一个遍历操作
+    * 2. if the context is the array, we should do the loop through
     * */
 
-    var getTag = function (tagName, context, results) {
+    
+
+    let getTag = function (tagName, context, results) {
         results = results || [];
         context = context || document;
         results.push.apply(results, context.getElementsByTagName(tagName));
@@ -59,21 +59,21 @@
     };
 
 
-    var getId = function (idName, context, results) {
+    let getId = function (idName, context, results) {
         results = results || [];
         context = context || document;
         results.push(document.getElementById(idName));
         return results;
     };
 
-    var getClass = function (className, context, results) {
+    let getClass = function (className, context, results) {
         results = results || [];
         context = context || document;
         if (document.getElementsByClassName) {
             results.push.apply(results, context.getElementsByClassName(className));
         } else {
 
-            var tempArr, i;
+            let tempArr, i;
             for (i = 0; i < tempArr.length; i++) {
                 if ( (' ' + tempArr[i].className + ' ').indexOf(' ' + className + ' ') != -1 ) {
                     results.push(tempArr[i]);
@@ -84,11 +84,11 @@
 
     };
 
-    var get = function (selector, context, results) {
+    let get = function (selector, context, results) {
         results = results || [];
         context = context || document;
 
-        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+        let rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
             m = rquickExp.exec(selector);
 
         if (m) {

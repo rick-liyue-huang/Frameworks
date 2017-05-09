@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="select.js"></script>
 </head>
-<body>
-<script src="select.js"></script>
+<body id="bd">
+<div></div>
+<div></div>
 <script>
 
-    var rickH = function (selector) {
+    var rickH = function(selector) {
         return new rickH.fn.init(selector);
-    };
+    }
 
     rickH.fn = rickH.prototype = {
         constructor: rickH,
         selector: null,
         init: function(selector) {
+
             if (typeof selector === 'string') {
 
                 if (selector.charAt(0) === '<') {
@@ -24,24 +27,22 @@
                     this.elements = select(selector);
                 }
             }
-            this.selector = selector;
+
+            this.selector = selector; // means that rickH object has the 'selector' property.
         }
     };
 
     rickH.fn.init.prototype = rickH.prototype;
 
-    rickH.fn.extend = rickH.extend = function(obj) {
-        // for extension
+    rickH.extend = rickH.fn.extend = function(obj) {
         var k;
         for (k in obj) {
             this[k] = obj[k];
         }
-    }
+    };
 
-// extend method for the basic tool methods
     rickH.extend({
-
-        each: function (arr, fn) {
+        each: function(arr, fn) {
             var i, l = arr.length, isArray = rickH.isLikeArray(arr);
             if (isArray) {
                 for (i = 0; i < l; i++) {
@@ -60,7 +61,6 @@
         }
     });
 
-    // used to conform the type
     rickH.extend({
         isFunction: function(obj) {
             return typeof obj === 'function';
@@ -74,8 +74,25 @@
         isRickH: function(obj) {
             return !!obj.selector;
         },
-        isDom: function(obj) {
+        isDOM: function(obj) {
             return !!obj.nodeType;
+        }
+    });
+
+    rickH.fn.extend({
+        appendTo: function(selector) {
+
+            var self = this;
+            var objs = rickH(selector).elements;
+            rickH.each(objs, function(i1, v1) {
+                var that = this;
+
+                rickH.each(self.elements, function(i2, v2) {
+                    that.appendChild(i1 === objs.length - 1 ?
+                        this :
+                        this.cloneNode(true));
+                });
+            });
         }
     });
 
@@ -89,19 +106,23 @@
         }
         return arr;
     };
-
-
-
 </script>
 
+
 <script>
-    var list1 = rickH('<div></div><p></p><a></a>');
-    var list2 = rickH('body');
-    console.log(list1);
-    console.log(list2);
+//    rickH('<div>1</div><div>2</div><div>3</div><div>4</div>').appendTo(document.body);
+rickH('<div>1</div><div>2</div><div>3</div><div>4</div>').appendTo('div');
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 

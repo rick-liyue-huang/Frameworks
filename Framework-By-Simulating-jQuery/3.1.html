@@ -6,108 +6,68 @@
 </head>
 <body>
 
-    <div id="dv1">
-        <p>p1</p>
-        <p>p2</p>
-        <p>p3</p>
-        <p>p4</p>
-    </div>
-    <div id="dv2"></div>
 <script>
 
     /*
+    * DOM element property and methods
+    * 1. why dom
+    * <div><p></p></div>  -> node: {children: p} transfer the string to object
     *
-    * 框架创建代码的方法
+    * 2. DOM treat the all elements in page as object tree
     *
-    * 类比 jQuery
-    * $('<div style=""></div>');
+    * 3. property:
+    * nodeType: describe the dom element type, and only for the dom element. 1 element object ，2 attribute object，3 text object
+    * nodeValue: treat with the dom object value, and only in the text tag
+    * nodeName: treat with the dom element tag name, and show in upper case，so can used in 'toLowerCase()' method
+    * p.childNodes[1].nodeName.toLocaleLowerCase()
     *
-    * rickH 框架
-    * var dom = RH('<a href="http://www.google.com">one link</a>')
+    * 4. relationship
+    * firstChild, lastChild childNodes  nextSibling, previousSibling, parentNode
+    *
+    * content attribute innerHTML, innerText, innerHTML 带有标签
+    *
+    * 5. methods
+    *  appendChild, insertBefore, removeChild, innerHTML
     * */
-
-    var cElem = function (html) {
-        // 1.在内部创建一个docFrag,但是必须用真正的div
-        var docFrag = document.createDocumentFragment();
-
-        // 2. 创建真正的div，然后设置其innerHTML 为输入的字符串
-//        然后再遍历该子元素，将内容加入到docFrag中
-
-        var div = document.createElement('div');
-
-        // 3. 将字符串设置为 它的 innerHTML
-        div.innerHTML = html;
-
-//        4.遍历div的子元素加入到 docFrag, 因为DOM元素只有一个父元素
-        while (div.firstChild) {
-            docFrag.appendChild(div.firstChild);
-        }
-        // 4. 获得其子元素返回
-        return docFrag;
-    };
-
-    // test
-    var dom = cElem('<a href="http://www.google.com">google</a>' + '<br>' +
-        '<a href="http://www.baidu.com">baidu</a>');
-
-    document.body.appendChild(dom);
 
 
     /*
-    * dom 元素的父节点问题
+    *
+    * 框架创建代码的方法, based on the jQuery framework, we use the similar method to create my own framework
+    *
+    *  jQuery
+    * $('<div style=""></div>');
+    *
+    * rickH framework
+    * var dom = RH('<a href="http://www.google.com">one link</a>')
     * */
 
-    var d1 = document.getElementById('dv1');
-    var d2 = document.getElementById('dv2');
+    let cElem = function(html) {
 
-    var list = d1.childNodes;
-//    var len;
-//    for (var i = 0, len = list.length; i < len; i++) {
-//        d2.appendChild(list[0]);
-//    }
-//    while (list[0]) {
-//        d2.appendChild(list[0]);
-//    }
+        // 1. create a docFrag, and must be the true div
+        let docFrag = document.createDocumentFragment();
 
-//    =>
-    while (d1.firstChild) {
-        d2.appendChild(d1.firstChild);
-    }
+        // 2. create the true div, and set its innerHTML as the html argument, then loop through its child elements and add to docFrag element.
+        let div = document.createElement('div');
+
+        div.innerHTML = html;
+
+        while (div.firstChild) {
+            docFrag.appendChild(div.firstChild);
+        }
+
+        return docFrag;
+    };
+
+    let dom = cElem('<a href="http://www.google.com">google</a>' + '<br>' +
+        '<a href="http://www.baidu.com">baidu</a>');
+    // has to add the dom on the body.
+    document.body.appendChild(dom);
 
 
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

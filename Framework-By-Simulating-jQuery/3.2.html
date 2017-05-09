@@ -9,28 +9,24 @@
 
 
     /*
-    * appendTo:
-    * 函数返回DOM对象，没有该方法，因此需要将这个方法加入
-    * 但是现在需要该方法，在原型中添加？？ 在那个原型中添加呢
-    * 首先不确定DOM对象的共有原型，同时可能引起原型链搜索的性能问题
-    * 其次，开发的原则是不影响内置对象成员
+    * add 'appendTo' method :
+    * in order to avoid the additional prototype search, we add this method on the self-encap object, but not on the object own.
     *
-    * 因此不应该直接在DOM 对象上添加成员
-    *
-    * 这里 给 DOM对象提供一个包装对象，也就是让其返回一个自定义对象，而这个自定义对象具有appendTo方法
     * */
 
-    var cElem = function (html) {
-        var docFrag = document.createDocumentFragment();
-        var div = document.createElement('div');
+    let cElem = function(html) {
+
+        let docFrag = document.createDocumentFragment();
+        let div = document.createElement('div');
         div.innerHTML = html;
-        while (div.firstChild) {
-            docFrag.appendChild(div.firstChild)
+        while(div.firstChild) {
+            docFrag.appendChild(div.firstChild);
         }
 
+        // self-encap an object and set the appendTo as the property of this object
         return {
             element: docFrag,
-            appendTo: function (dom) {
+            appendTo: function(dom) {
                 dom.appendChild(this.element);
             }
         }

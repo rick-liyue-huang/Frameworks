@@ -39,111 +39,118 @@
 <script>
 
     /*
-     * get('selector', 父元素，results); -> 在父元素里面实现这个功能, 这个父元素就是向下文
-     *
-     * 如果要实现这个功能， 应该先找到父元素。
-     * 1.首先假定 父元素 就是 dom 元素
-     * 首先应该考虑修改查找元素的三个get方法，然后在考虑总的 get 方法
-     * 注意还是将 results 方法后面， 因为 results 是可以省略的
-     *
-     *
-     *
-     * 2. 假定 context 是一个dom数组，需要做一个遍历操作
-     * */
+    * get('selector', parentElement，results); -> here 'context' is the parentEle
+    *
+    * 
+    * 1.firstly, we assume that the parentEle is the dom element
+    *
+    *
+    *
+    * 2. if the context is the array, we should do the loop through
+    * */
 
-    var getTag = function (tagName, context, results) {
-        results = results || [];
+    // used to confirm the browser capability.
+    let support = {};
 
-        results.push.apply(results, context.getElementsByTagName(tagName));
-        return results;
-    };
+    support.getElementsByClassName = !!document.getElementsByClassName;
 
+    support.getElementsByClassName = (function() {
+        let isExist = !!document.getElementsByClassName;
 
-    var getId = function (idName, results) {
-        results = results || [];
+        if (isExist && typeof document.getElementsByClassName === 'function') {
 
-        results.push(document.getElementById(idName));
-        return results;
-    };
+            let div = document.createElement('div');
+            let divWithClass = document.createElement('div');
 
-    var getClass = function (className, context, results) {
-        results = results || [];
-
-        if (document.getElementsByClassName) {
-            results.push.apply(results, context.getElementsByClassName(className));
-        } else {
-
-            var tempArr, i;
-            for (i = 0; i < tempArr.length; i++) {
-//                if ( (' ' + tempArr[i].className + ' ').indexOf(' ' + className + ' ') != -1 ) {
-//                    results.push(tempArr[i]);
-//                }
-
-// 换一种思路： tempArr[i] 就是一个元素，判断该元素的className 中是否包含传入的参数
-                // className.
-//            比如说 元素是 <div class='c1 c2 c3'></div>
-//            因此使用传统的处理方法
-
-//                注意 classname属性必须验证非空
-                var list = tempArr[i].className.split(' ');
-                for (var j = 0; j < list.length; j++) {
-                    if (list[j] === className) {
-                        results.push(tempArr[i]);
-                        break;
-                    }
-                }
-            }
-
-
-
+            divWithClass.className = 'c';
+            div.appendChild(divWithClass);
+            return div.getElementsByClassName('c') === divWithClass;
         }
-        return results;
+        return false;
+    })();
 
-    };
+    if (document.getElementsByClassName) {
+        console.log('support classname method'); //support classname method
+    } else {
+        console.log('no support');
+    }
 
-    var get = function (selector, context, results) {
-        results = results || [];
-        context = context || document;
-        var rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
-            m = rquickExp.exec(selector);
 
-        // 对 context 作遍历
-
-        // 对if 内容放入到循环中
-
-            if (m) {
-                if (context.nodeType) { // 表示是一个元素
-                    context = [context];
-                }
-                each(context, function (i, v) {
-                    if (m[1]) {
-                        results = getId(m[1], results);
-                    } else if (m[2]) {
-                        results = getClass(m[2], v, results);
-                    } else if (m[3]) {
-                        results = getTag(m[3], v, results);
-                    } else if (m[4]) {
-                        results = getTag(m[4], this, results);
-                    }
-                });
-
-            }
-            return results;
-
-    };
-
-    var each = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
+    let each = function(arr, fn) {
+        for (let i = 0; i < arr.length; i++) {
             if (fn.call(arr[i], i, arr[i]) === false) {
                 break;
             }
         }
     };
 
-//    get('.c', get('.c3')[0])[0].style.backgroundColor = 'yellow';
-    each(get('.c', get('.c3')), function () {
-        this.style.backgroundColor = 'pink';
+    let getTag = function(tagName, context, results) {
+        results = results || [];
+        results.push.apply(results, context.getElementsByTagName(tagName));
+        return results;
+    }
+
+    let getId = function (idName, results) {
+        results = results || [];
+        results.push.apply(document.getElementById(idName));
+        return results;
+    };
+
+    let getClass = function(className, context, results) {
+        results = results || [];
+        if (document.getElementsByClassName) {
+            results.push.apply(results, context.getElementsByClassName(className));
+        } else {
+            let tempArr = [], i;
+
+            for (i = 0; i < tempArr.length; i++) {
+                // we do some change here
+                let list = tempArr[i].className.split(' ');
+                for (let j = 0; j < list.length; j++) {
+                    if (list[j] === className) {
+                        results.push(tempArr[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    let get = function (selector, context, results) {
+        results = results || [];
+        context = context || document;
+        let rquickExp = /^(?:#([\w-]+)|\.([\w-]+)|([\w]+)|\*)$/,
+            m = rquickExp.exec(selector);
+
+        // here we assume the context is array
+        if (m) {
+            if (context.nodeType) { // 2. means that context is one element, 
+                context = [context];
+            }
+
+            each(context, function(i, v) {  // v => context
+                if (m[1]) {
+                    results = getId(m[1], results);
+                } else if (m[2]) {
+                    results = getClass(m[2], v, results);
+                } else if (m[3]) {
+                    results = getTag(m[3], v, results);
+                } else if (m[4]) {
+                    results = getTag(m[4], v, results);
+                }
+            })
+        }
+        return results;
+    };
+
+    each(get('.c', get('.c3')), function() {
+        this.style.backgroundColor = 'blue';
     });
+
+
+    
+
 
 </script>
 </body>

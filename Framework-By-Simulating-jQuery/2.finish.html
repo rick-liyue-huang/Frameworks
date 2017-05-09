@@ -1,4 +1,47 @@
-/*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    .rect {
+                width: 400px;
+                height: 50px;
+                margin: 10px 0;
+            }
+            .c {
+                border: 1px solid red;
+            }
+            .c1 {
+                border: 1px solid blue;
+            }
+            .c2 {
+                border: 1px solid green;
+            }
+    </style>
+</head>
+
+
+<body>
+<div class="c3">
+    <div class="c1 rect"></div>
+    <div class="c2 rect"></div>
+    <div class="c rect"></div>
+    <div class="c1 rect"></div>
+</div>
+<hr>
+<div class="c3">
+    <div class="c1 rect"></div>
+    <div class="c2 rect"></div>
+    <div class="c rect"></div>
+    <div class="c1 rect"></div>
+    <p>djuluo</p>
+</div>
+
+
+<script>
+
+    /*
     *
     * 1. firstly, write the basic ones
     * getTag('tag'), getId('id'), getClass('classname')
@@ -244,3 +287,41 @@ var select = function (selector, context, results) {
 return select;
 
 })();
+
+
+    var list = select('.c3 .c, p');
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'blue';
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
