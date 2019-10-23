@@ -20,9 +20,11 @@
     console.log($$('.item'));
     console.log($$([1, 3, 6]));
     console.log($$({0:'a', 1:'b', length: 2}));
-    $$(function() {
-      console.log(123);
-    })
+    // $$(function() {
+    //   console.log(123);
+    // });
+    var res = $$('div');
+    console.log(res.eq(-1));
   </script>
 </body>
 </html>

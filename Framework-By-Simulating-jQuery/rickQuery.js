@@ -117,10 +117,30 @@
       else {
         return this[this.length + num];
       }
-    }
-    // eq 获取指定下表的元素，获取的是rickQuery实例对象
-    // first 获取实例中的第一个元素，返回rickQuery实例对象
-    // last 获取最后一个rickQuery实例对象
+    },
+    // eq method: return the rickQuery element by index
+    eq: function(num) {
+      if(0 === arguments.length) {
+        return new rickQuery();
+      } 
+      // else if(num > 0) {
+      //   return rickQuery(this.get(num));
+      // } 
+      // else {
+      //   return rickQuery(this.get(num))
+      // }
+      else {
+        return rickQuery(this.get(num));
+      }
+    },
+    // first method: return the first rickQuery instance
+    first: function() {
+      return this.eq(0);
+    },
+    // last method: return the last rickQuery instance
+    last: function() {
+      return this.eq(-1);
+    } 
   }
 
   // define one 'extend' method to define rickQuery class and rickQuery instance methods inside.
