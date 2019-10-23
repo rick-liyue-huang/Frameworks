@@ -140,7 +140,12 @@
     // last method: return the last rickQuery instance
     last: function() {
       return this.eq(-1);
-    } 
+    },
+    // each method: traverse the rickQuery instance, (index, value)
+    // based on the rickQuery class each method
+    each: function(fn) {
+      rickQuery.each(this, fn);
+    }
   }
 
   // define one 'extend' method to define rickQuery class and rickQuery instance methods inside.
@@ -193,6 +198,36 @@
             fn();
           }
         })
+      }
+    },
+
+    // define each method in the rickQuery class
+    each: function(obj, fn) {
+      // confirm its array
+      if(rickQuery.isArray(obj)) {
+        for(var i = 0; i < obj.length; i++) {
+          // var res = fn(i, obj[i]);
+          // let this point to val(obj[i])
+          var res = fn.call(obj[i], i, obj[i]);
+          if(true === res) {
+            continue;
+          } else if(false === res) {
+            break;
+          }
+        }
+      }
+      // confirm its object
+      else if(rickQuery.isObject(obj)) {
+        for(var key in obj) {
+          // var res = fn(key, obj[key]);
+          // let this point to val(obj[key])
+          var res = fn.call(obj[key], key, obj[key]);
+          if(true === res) {
+            continue;
+          } else if(false === res) {
+            break;
+          }
+        }
       }
     }
     
