@@ -88,7 +88,39 @@
         return this;
       }
     },
-    // 
+    // define method to get version
+    version: '1.1.0',
+    // define the default 'selector' methods
+    selector: '',
+    // define the default 'length' method
+    length: 0,
+    // push mehtod: add new element to rickQuery, [].push.apply(this)
+    push: [].push,
+    // sort method: sort the rickQuery instance
+    sort: [].sort,
+    // splice method: based on array splice method
+    splice: [].splice,
+    // toArray method: transfer pseudo array to true array
+    toArray: function() {
+      return [].slice.call(this); 
+    },
+    // get method: get the DOM element by index 
+    get: function(num) { // no 'num'
+      if(0 === arguments.length) {
+        return this.toArray(); // return the true array
+      } 
+      // num is positive number
+      else if(num >= 0) {
+        return this[num];
+      }
+      // num is negative number
+      else {
+        return this[this.length + num];
+      }
+    }
+    // eq 获取指定下表的元素，获取的是rickQuery实例对象
+    // first 获取实例中的第一个元素，返回rickQuery实例对象
+    // last 获取最后一个rickQuery实例对象
   }
 
   // define one 'extend' method to define rickQuery class and rickQuery instance methods inside.
