@@ -43,7 +43,7 @@
 
   <input type="text" value="ok">
 
-  <script src="./rickQuery.1.2.0.js"></script>
+  <script src="./rickQuery.1.3.0.js"></script>
   <!-- <script src="./jquery-1.12.4.js"></script> -->
   <script>
     // console.log($$(''));
@@ -124,7 +124,15 @@
 
     // console.log($$('div').hasClass());
 
-    console.log($$('div').toggleClass());
+    // console.log($$('div').toggleClass());
+    $$('input').on('click', function() {
+      console.log('click');
+    });
+    // $$('input').off('mouseleave', function() {
+    //   console.log('click11');
+    // });
+    var nn = $$('input').clone(true);
+    $$('body').append(nn);
   </script>
 </body>
 </html>
