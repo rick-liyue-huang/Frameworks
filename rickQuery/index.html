@@ -5,12 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+
+    div {
+      width: 200px;
+      height: 200px;
+
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+
+    .bd {
+      border: 6px solid #000;
+    }
+
+    .pd {
+      padding: 10px;
+
+    }
+  </style>
 </head>
 <body>
   
   
-  <p>pp</p>
-  <div class="item">a
+  <p id="p">pp</p>
+  <div class="item box">a
     <li>li</li>
   </div>
   <div class="item">b
@@ -18,7 +41,9 @@
   </div>
   <div class="item">c</div>
 
-  <script src="./rickQuery.js"></script>
+  <input type="text" value="ok">
+
+  <script src="./rickQuery.1.2.0.js"></script>
   <!-- <script src="./jquery-1.12.4.js"></script> -->
   <script>
     // console.log($$(''));
@@ -81,7 +106,7 @@
     // $$('div').text('<p>hahah</p>');
     // $$('p').appendTo('div');
     // console.log($$('p').prependTo('div'));
-    // $$('div').append('<span>span</span>');
+    // $$('div').append('haha');
     // var divs = document.querySelectorAll('div');
     // var ps = document.querySelectorAll('p');
     // $$(divs).prepend(ps);
@@ -89,6 +114,17 @@
 
     // $$('p').insertBefore('div');
     // $$('p').replaceAll('li');
+    // console.log($$('p').attr('id', 'ppp'));
+    // console.log($$('div').attr('id', 'div1'));
+    // console.log($$('div').prop({'abc': 'ok'}));
+    // console.log($$('div').prop('abc'));
+    // console.log($$('div').css({'height': '50px', "background-color": "red"}));
+
+    // console.log($$('input').val('good'));
+
+    // console.log($$('div').hasClass());
+
+    console.log($$('div').toggleClass());
   </script>
 </body>
 </html>

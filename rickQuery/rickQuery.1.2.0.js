@@ -161,114 +161,7 @@
     }
   }
 
-  // define some tool mehtods in rickQuery class
-  rickQuery.extend({
-    // define trim method to compatible with ie8
-    trim: function(str) {
-      if(str.trim) {
-        return str.trim();
-      } else {
-        return str.replace(/^\s+|\s+$/, '');
-      }
-    },
-    isObject: function(selector) {
-      return 'object' === typeof selector;
-    },
-    isFunction: function(fn) {
-      return 'function' === typeof fn;
-    },
-    isWindow: function(selector) {
-      return window === selector;
-    },
-    isString: function(selector) {
-      return 'string' === typeof selector;
-    },
-    isHTML: function(str) {
-      return '<' === str.charAt(0) && '>' === str.charAt(str.length - 1) && str.length >= 3
-    },
-    isArray: function(selector) {
-      return rickQuery.isObject(selector) && 'length' in selector && !rickQuery.isWindow(selector);
-    },
-    // after the page loaded, it executed, and compatible with IE8, 
-    ready: function(fn) {
-      if('complete' == document.readyState) {
-        fn();
-      } else if(document.addEventListener) {
-        document.addEventListener('DOMContentLoaded', function() {
-          fn();
-        });
-      } else {
-        document.attachEvent('onreadystatechange', function() {
-          if('complete' == document.readyState) {
-            fn();
-          }
-        })
-      }
-    },
-
-    // define each method in the rickQuery class
-    each: function(obj, fn) {
-      // confirm its array
-      if(rickQuery.isArray(obj)) {
-        for(var i = 0; i < obj.length; i++) {
-          // var res = fn(i, obj[i]);
-          // let this point to val(obj[i])
-          var res = fn.call(obj[i], i, obj[i]);
-          if(true === res) {
-            continue;
-          } else if(false === res) {
-            break;
-          }
-        }
-      }
-      // confirm its object
-      else if(rickQuery.isObject(obj)) {
-        for(var key in obj) {
-          // var res = fn(key, obj[key]);
-          // let this point to val(obj[key])
-          var res = fn.call(obj[key], key, obj[key]);
-          if(true === res) {
-            continue;
-          } else if(false === res) {
-            break;
-          }
-        }
-      }
-      return obj;
-
-    },
-
-    // define map method on class 
-    map: function(obj, fn) {
-      var res = [];
-      // confirm its array
-      if(rickQuery.isArray(obj)) {
-        for(var i = 0; i < obj.length; i++) {
-
-          var temp = fn(obj[i], i);
-          if(temp) {
-            res.push(temp);
-          }
-          
-        }
-      } 
-      // confirm its object
-      else if(rickQuery.isObject(obj)) {
-        for(var key in obj) {
-          var temp = fn(obj[key], key);
-          if(temp) {
-            res.push(temp);
-          }
-          
-        }
-      }
-      return res;
-
-    },
-
-  });
-
-  // define some methods on rickQuery prototype
+  // define some DOM methods on rickQuery prototype
   rickQuery.prototype.extend({
     // empty the element children and content
     empty: function() {
@@ -413,9 +306,12 @@
     // simlar as appendTo method
     append: function (selector) {
       if(rickQuery.isString(selector)) {
-          for(var i = 0; i < this.length; i++) {
-            this.get(i).innerHTML += selector;
-          }
+          // for(var i = 0; i < this.length; i++) {
+          //   this.get(i).innerHTML += selector;
+          // }
+          this.each(function(key, val) {
+            val.innerHTML += selector;
+          })
         } else {
           $$(selector).appendTo(this);
         }
@@ -496,7 +392,330 @@
       return $$(res);
     },
 
-  })
+    clone: function() {
+      
+    },
+
+  });
+
+  // define some attr/prop/css/class methods on rickQuery prototype
+  rickQuery.prototype.extend({
+
+    // attr mehtod:
+    // only one argu, return the first element with argu name.
+    // two argus, set all the eleemnt with argu name and argu value;
+    // argu is one object, set all the eleemnt with argu name and argu value;
+      attr: function(attr, value) {
+        // confirm argu is string
+        if(rickQuery.isString(attr)) {
+          // confirm one string or two string
+          if(1 === arguments.length) {
+            return this[0].getAttribute(attr);
+          } else {
+            // 1 === arguments.length
+            this.each(function(key, ele) {
+              ele.setAttribute(attr, value);
+            });
+          }
+        }
+        // confirm argu is object
+        else if(rickQuery.isObject(attr)) {
+          var $$this = this;
+          // traverse all name and value of attr
+          $$.each(attr, function(key, val) {
+            // traverse all the elements
+            $$this.each(function(k, ele) {
+              ele.setAttribute(key, val);
+            });
+          });
+        }
+        return this;
+  
+      },
+  
+      // prop method:
+      prop: function(prop, value) {
+        // confirm argu is string
+        if(rickQuery.isString(prop)) {
+          // confirm one string or two string
+          if(1 === arguments.length) {
+            return this[0][prop];
+          } else {
+            // 1 === arguments.length
+            this.each(function(key, ele) {
+              ele[prop] = value;
+            });
+          }
+        }
+        // confirm argu is object
+        else if(rickQuery.isObject(prop)) {
+          var $$this = this;
+          // traverse all name and value of attr
+          $$.each(prop, function(key, val) {
+            // traverse all the elements
+            $$this.each(function(k, ele) {
+              ele[key] = val;
+            });
+          });
+        }
+        return this;
+      },
+
+      // css method: similar as prop method
+      css: function(attr, value) {
+        // confirm argu is string
+        if(rickQuery.isString(attr)) {
+          // confirm one string or two string
+          if(1 === arguments.length) {
+            return rickQuery.getStyle(this[0], attr);
+          } else {
+            // 1 === arguments.length
+            this.each(function(key, ele) {
+              ele.style[attr] = value;
+            });
+          }
+        }
+        // confirm argu is object
+        else if(rickQuery.isObject(attr)) {
+          var $$this = this;
+          // traverse all name and value of attr
+          $$.each(attr, function(key, val) {
+            // traverse all the elements
+            $$this.each(function(k, ele) {
+              ele.style[key] = val;
+            });
+          });
+        }
+        return this;
+      },
+
+      // val mehtod: if no argument return value of 'value' prop. otherwise set all the element 'value' prop and return the ele
+      val: function(content) {
+        if(0 === arguments.length) {
+          return this[0].value;
+        } else {
+          this.each(function(key, ele) {
+            ele.value = content;
+          });
+          return this;
+        }
+      },
+
+      // hasClass method: notice add ' '
+      hasClass: function(name) {
+        var flag = false;
+        if(0 === arguments.length) {
+          return flag;
+        } else {
+          this.each(function(key, ele) {
+            // get the class value in ele
+            var className = ' ' + ele.className + ' ';
+            // add ' ' on designed 'name' argument
+            name = ' ' + name + ' ';
+            // by indexOf
+            if(className.indexOf(name) != -1) {
+              flag = true;
+              return false;
+            }
+          });
+          return flag;
+        }
+      },
+
+      // based on hasClass method: 
+      addClass: function(name) {
+        if(0 === arguments.length) {
+          return this;
+        }
+        // split the name by ' '
+        var names = name.split(' ');
+        // traverse the elements
+        this.each(function(key, ele) {
+          // traverse the names array
+          $$.each(names, function(k, v) {
+            // confirm the element  has v or not
+            if(!$$(ele).hasClass(v)) {
+              ele.className = ele.className + ' ' + v;
+            }
+          });
+        });
+        return this;
+
+      },
+
+      // 
+      removeClass: function(name) {
+        // if no argu will delete all the className
+        if(0 === arguments.length) {
+          this.each(function(key, ele) {
+            ele.className = '';
+          });
+        } else {
+          // delete the designed classname
+          // split the name by ' '
+          var names = name.split(' ');
+          // traverse the elements
+          this.each(function(key, ele) {
+            // traverse the names array
+            $$.each(names, function(k, v) {
+              // confirm the element  has v or not
+              if($$(ele).hasClass(v)) {
+                ele.className = (' ' + ele.className + ' ').replace(' ' + v + ' ', '');
+              }
+            });
+          });
+        }
+        return this;
+      },
+
+      // toggleClass to combine addClass and removeClass
+      toggleClass: function(name) {
+        if(0 === arguments.length) {
+          this.removeClass();
+        } else {
+          var names = name.split(' ');
+          // traverse the elements
+          this.each(function(key, ele) {
+            // traverse the names array
+            $$.each(names, function(k, v) {
+              // confirm the element  has v or not
+              if($$(ele).hasClass(v)) {
+                // delete className
+                $$(ele).removeClass(v);
+              } else {
+                // add className
+                $$(ele).addClass(v);
+              }
+            });
+          });
+        }
+        return this;
+        
+      }
+      
+  
+    });
+
+  // define some tool mehtods in rickQuery class
+  rickQuery.extend({
+    // define trim method to compatible with ie8
+    trim: function(str) {
+      if(str.trim) {
+        return str.trim();
+      } else {
+        return str.replace(/^\s+|\s+$/, '');
+      }
+    },
+    isObject: function(selector) {
+      return 'object' === typeof selector;
+    },
+    isFunction: function(fn) {
+      return 'function' === typeof fn;
+    },
+    isWindow: function(selector) {
+      return window === selector;
+    },
+    isString: function(selector) {
+      return 'string' === typeof selector;
+    },
+    isHTML: function(str) {
+      return '<' === str.charAt(0) && '>' === str.charAt(str.length - 1) && str.length >= 3
+    },
+    isArray: function(selector) {
+      return rickQuery.isObject(selector) && 'length' in selector && !rickQuery.isWindow(selector);
+    },
+    // after the page loaded, it executed, and compatible with IE8, 
+    ready: function(fn) {
+      if('complete' == document.readyState) {
+        fn();
+      } else if(document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', function() {
+          fn();
+        });
+      } else {
+        document.attachEvent('onreadystatechange', function() {
+          if('complete' == document.readyState) {
+            fn();
+          }
+        })
+      }
+    },
+
+    // define each method in the rickQuery class
+    each: function(obj, fn) {
+      // confirm its array
+      if(rickQuery.isArray(obj)) {
+        for(var i = 0; i < obj.length; i++) {
+          // var res = fn(i, obj[i]);
+          // let this point to val(obj[i])
+          var res = fn.call(obj[i], i, obj[i]);
+          if(true === res) {
+            continue;
+          } else if(false === res) {
+            break;
+          }
+        }
+      }
+      // confirm its object
+      else if(rickQuery.isObject(obj)) {
+        for(var key in obj) {
+          // var res = fn(key, obj[key]);
+          // let this point to val(obj[key])
+          var res = fn.call(obj[key], key, obj[key]);
+          if(true === res) {
+            continue;
+          } else if(false === res) {
+            break;
+          }
+        }
+      }
+      return obj;
+
+    },
+
+    // define map method on class 
+    map: function(obj, fn) {
+      var res = [];
+      // confirm its array
+      if(rickQuery.isArray(obj)) {
+        for(var i = 0; i < obj.length; i++) {
+
+          var temp = fn(obj[i], i);
+          if(temp) {
+            res.push(temp);
+          }
+          
+        }
+      } 
+      // confirm its object
+      else if(rickQuery.isObject(obj)) {
+        for(var key in obj) {
+          var temp = fn(obj[key], key);
+          if(temp) {
+            res.push(temp);
+          }
+          
+        }
+      }
+      return res;
+
+    },
+
+    // define method to get style
+    getStyle: function(dom, styleName) {
+      if(window.getComputedStyle) {
+        return window.getComputedStyle(dom)[styleName];
+
+      } else { // for ie8
+        return dom.currentStyle[styleName];
+      }
+    }
+
+  });
+
+  
+
+  
 
   // unify rickQuery prototype and init prototype
   rickQuery.prototype.init.prototype = rickQuery.prototype;
@@ -558,6 +777,8 @@ appendTo: function (selector) {
 },
 
 */
+
+
 
 
 
