@@ -8,40 +8,87 @@
 </head>
 <body>
   
-
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
+  
+  <p>pp</p>
+  <div class="item">a
+    <li>li</li>
+  </div>
+  <div class="item">b
+    <li>li</li>
+  </div>
+  <div class="item">c</div>
 
   <script src="./rickQuery.js"></script>
+  <!-- <script src="./jquery-1.12.4.js"></script> -->
   <script>
-    console.log($$(''));
-    console.log($$(NaN));
-    console.log($$('<div><p></p></div><div><p></p></div>'));
-    console.log($$('.item'));
-    console.log($$([1, 3, 6]));
-    console.log($$({0:'a', 1:'b', length: 2}));
+    // console.log($$(''));
+    // console.log($$(NaN));
+    // console.log($$('<div><p></p></div><div><p></p></div>'));
+    // console.log($$('.item'));
+    // console.log($$([1, 3, 6]));
+    // console.log($$({0:'a', 1:'b', length: 2}));
     // $$(function() {
     //   console.log(123);
     // });
-    var res = $$('div');
-    console.log(res.eq(-1));
+    // var res = $$('div');
+    // console.log(res.eq(-1));
 
     var arr = [1, 3, 6];
-    var obj1 = {0:'a', 1: 'b', length: 2};
-    var obj2 = {"name": 'rick'};
-    $$.each(arr, function(key, value) {
+    // var obj1 = {0:'a', 1: 'b', length: 2};
+    // var obj2 = {"name": 'rick'};
+    // $$.each(arr, function(key, value) {
       // if(key === 1) {
       //   return false;
       // }
       // console.log(this);
       // console.log(key, value);
-    });
+    // });
 
-    $$(arr).each(function(key, val) {
-      // console.log(key, val);
-      console.log(this);
-    })
+    // $(arr).each(function(key, val) {
+    //   // console.log(key, val);
+    //   console.log(this);
+    // });
+    // var res = $$.map(arr, function(val, key) {
+    //   console.log(val, key);
+    //   console.log(this);
+    //   if(2 === key) {
+    //     return val;
+    //   }
+    // });
+    // console.log(res);
+    // var res = $$.map(arr, function(val, key) {
+    //   console.log(val, key);
+    //   console.log(this);
+    //   if(2 === key) {
+    //     return val;
+    //   }
+    // });
+    // console.log(res);
+    // $$(arr).map(function(i, v) {
+    //   // console.log(i);
+    //   console.log(this);
+    // })
+    // $.map(arr, function(i, v) {
+    //   // console.log(i, v);
+    //   console.log(this);
+    // });
+
+    // $$('div').empty();
+    // $$('div').remove('.box');
+    // console.log($$('div').html());
+    // $$('div').html('<p>hahah</p>');
+    // console.log($$('div').text());
+    // $$('div').text('<p>hahah</p>');
+    // $$('p').appendTo('div');
+    // console.log($$('p').prependTo('div'));
+    // $$('div').append('<span>span</span>');
+    // var divs = document.querySelectorAll('div');
+    // var ps = document.querySelectorAll('p');
+    // $$(divs).prepend(ps);
+    // $$('div').prepend('<span>span</span>');
+
+    // $$('p').insertBefore('div');
+    // $$('p').replaceAll('li');
   </script>
 </body>
 </html>
