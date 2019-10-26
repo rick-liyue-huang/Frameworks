@@ -29,7 +29,23 @@ $('.send').click(function() {
       // match the return data with the server setting content
       // {error: 0, id: 0, time: 1572092453, acc: 0, ref: 0}
       // {error: 0, id: 新添加内容的ID, time: 添加时间, acc: 点赞数, ref: 点踩数}
-      console.log(msg);
+      // console.log(msg);
+
+      // transfer the json string to obj
+      // var obj = JSON.parse(msg);
+      // console.log(obj);
+      // 'Uncaught SyntaxError: Unexpected token e in JSON at position 1' means this is not a standard json string
+      // the standard json string should be '{"error": "0", "id": "0", "time": "1572092453", "acc": "0", "ref": "0"}'
+      var obj = eval(`(${msg})`); // used to transfer the unstandard json string
+      console.log(obj);
+      obj.content = $text; // add $text on obj as its property.
+
+      // create node
+      var $blog = createElement(obj);
+      $('.message-list').prepend($blog);
+
+      // clear the input after send
+      $('.comment').val('');
     },
     error: function(xhr) {
       console.log(xhr.status);
@@ -37,9 +53,7 @@ $('.send').click(function() {
   })
 
 
-  // create node
-  var $blog = createElement($text);
-  $('.message-list').prepend($blog);
+  
 });
 
 // listen the three a links by delegate
@@ -56,19 +70,19 @@ $('body').delegate('.info-del', 'click', function() {
 });
 
 // creat blog function
-function createElement(text) {
+function createElement(obj) {
   return $(`
   <div class="info">
     <p class="info-text">
-      ${text}
+      ${obj.content}
     </p>
     <p class="info-operation">
       <span class="info-time">
-        ${formatDate()}
+        ${formatDate(obj.time)}
       </span>
       <span class="info-handle">
-        <a class="info-up" href="javascript:;">0</a>
-        <a class="info-down" href="javascript:;">0</a>
+        <a class="info-up" href="javascript:;">${obj.acc}</a>
+        <a class="info-down" href="javascript:;">${obj.ref}</a>
         <a class="info-del" href="javascript:;">delete</a>
       </span>
     </p>
@@ -77,7 +91,7 @@ function createElement(text) {
 }
 
 // create blog send time function
-function formatDate() {
-  var date = new Date();
+function formatDate(time) {
+  var date = new Date(time * 1000);
   return `${date.getFullYear()}-${(date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1) }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()} ${date.getHours() < 10 ? '0'+date.getHours() : date.getHours() }:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() }:${date.getSeconds() < 10 ? '0'+ date.getSeconds() : date.getSeconds()}`;
 }
