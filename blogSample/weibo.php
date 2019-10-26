@@ -3,7 +3,7 @@
 **********************************************
 	usage:
 			weibo.php?act=add&content=xxx	添加一条
-				返回：{error: 0, id: 新添加内容的ID, time: 添加时间, acc: 点赞数, ref: 点踩数}
+				返回：{error:0, id: 新添加内容的ID, time: 添加时间}
 			
 			weibo.php?act=get_page_count	获取页数
 				返回：{count:页数}
@@ -26,15 +26,15 @@
 
 error_reporting(E_ALL ^ E_DEPRECATED);
 //创建数据库之类的
-$db=mysqli_connect('localhost', 'root', '') or mysqli_connect('localhost', 'root', 'admin');
+$db=@mysql_connect('localhost', 'root', '') or @mysql_connect('localhost', 'root', 'admin');
 
-mysqli_query("set names 'utf8'");
-mysqli_query('CREATE DATABASE nj_ajax');
+mysql_query("set names 'utf8'");
+mysql_query('CREATE DATABASE it666_ajax');
 
-mysqli_select_db('nj_ajax');
+mysql_select_db('it666_ajax');
 
 $sql= <<< END
-CREATE TABLE  `nj_ajax`.`weibo` (
+CREATE TABLE  `it666_ajax`.`weibo` (
 `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `content` TEXT NOT NULL ,
 `time` INT NOT NULL ,
@@ -43,7 +43,7 @@ CREATE TABLE  `nj_ajax`.`weibo` (
 ) CHARACTER SET utf8 COLLATE utf8_general_ci
 END;
 
-mysqli_query($sql);
+mysql_query($sql);
 
 //正式开始
 
@@ -62,24 +62,24 @@ switch($act)
 		
 		$sql="INSERT INTO weibo (ID, content, time, acc, ref) VALUES(0, '{$content}', {$time}, 0, 0)";
 		
-		mysqli_query($sql);
+		mysql_query($sql);
 		
-		$res=mysqli_query('SELECT LAST_INSERT_ID()');
+		$res=mysql_query('SELECT LAST_INSERT_ID()');
 		
-		$row=mysqli_fetch_array($res);
+		$row=mysql_fetch_array($res);
 		
 		$id=(int)$row[0];
-		
-		echo "{error: 0, id: {$id}, time: {$time}, acc: 0, ref: 0}";
+
+        echo "{error: 0, id: {$id}, time: {$time}, acc: 0, ref: 0}";
 		break;
 	case 'get_page_count':
 		$sql="SELECT COUNT(*)/{$PAGE_SIZE}+1 FROM weibo";
 		
-		mysqli_query($sql);
+		mysql_query($sql);
 		
-		$res=mysqli_query($sql);
+		$res=mysql_query($sql);
 		
-		$row=mysqli_fetch_array($res);
+		$row=mysql_fetch_array($res);
 		
 		$count=(int)$row[0];
 		
@@ -93,10 +93,10 @@ switch($act)
 		
 		$sql="SELECT ID, content, time, acc, ref FROM weibo ORDER BY time DESC LIMIT {$s}, {$PAGE_SIZE}";
 		
-		$res=mysqli_query($sql);
+		$res=mysql_query($sql);
 		
 		$aResult=array();
-		while($row=mysqli_fetch_array($res))
+		while($row=mysql_fetch_array($res))
 		{
 			$arr=array();
 			array_push($arr, 'id:'.$row[0]);
@@ -119,30 +119,30 @@ switch($act)
 	case 'acc':
 		$id=(int)$_GET['id'];
 		
-		$res=mysqli_query("SELECT acc FROM weibo WHERE ID={$id}");
+		$res=mysql_query("SELECT acc FROM weibo WHERE ID={$id}");
 		
-		$row=mysqli_fetch_array($res);
+		$row=mysql_fetch_array($res);
 		
 		$old=(int)$row[0]+1;
 		
 		$sql="UPDATE weibo SET acc={$old} WHERE ID={$id}";
 		
-		mysqli_query($sql);
+		mysql_query($sql);
 		
 		echo '{error:0}';
 		break;
 	case 'ref':
 		$id=(int)$_GET['id'];
 		
-		$res=mysqli_query("SELECT ref FROM weibo WHERE ID={$id}");
+		$res=mysql_query("SELECT ref FROM weibo WHERE ID={$id}");
 		
-		$row=mysqli_fetch_array($res);
+		$row=mysql_fetch_array($res);
 		
 		$old=(int)$row[0]+1;
 		
 		$sql="UPDATE weibo SET ref={$old} WHERE ID={$id}";
 		
-		mysqli_query($sql);
+		mysql_query($sql);
 		
 		echo '{error:0}';
 		break;
@@ -150,7 +150,7 @@ switch($act)
 		$id=(int)$_GET['id'];
 		$sql="DELETE FROM weibo WHERE ID={$id}";
 		//echo $sql;exit;
-		mysqli_query($sql);
+		mysql_query($sql);
 		echo '{error:0}';
 		break;
 }
