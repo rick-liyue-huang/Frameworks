@@ -1,6 +1,5 @@
 
 // using jQuery to handle event
-// using ajax to communicate with 'weibo.php' file
 
 // listen the input value change
 $('body').delegate('.comment', 'propertychange input', function() {
@@ -19,24 +18,6 @@ $('.send').click(function() {
   // alert('send');
   // get the content of textarea
   var $text = $('.comment').val();
-
-  // start to use ajax to communicate with server
-  $.ajax({
-    type: 'get',
-    url: 'weibo.php',
-    data: 'act=add&content='+$text,
-    success: function(msg) {
-      // match the return data with the server setting content
-      // {error: 0, id: 0, time: 1572092453, acc: 0, ref: 0}
-      // {error: 0, id: 新添加内容的ID, time: 添加时间, acc: 点赞数, ref: 点踩数}
-      console.log(msg);
-    },
-    error: function(xhr) {
-      console.log(xhr.status);
-    }
-  })
-
-
   // create node
   var $blog = createElement($text);
   $('.message-list').prepend($blog);
