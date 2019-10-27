@@ -17,7 +17,11 @@ $('body').delegate('.comment', 'propertychange input', function() {
 
 // get the first page content by loading web
 // [{id: ID, content: "内容", time: 时间戳, acc: 顶次数, ref: 踩次数}, {...}, ...]
-getMsgList(1);
+// getMsgList(1);
+
+// get pageNumber from cookie
+var number = $.getCookie('pageNumber') || 1;
+getMsgList(number);
 
 // get page number
 getMsgPage();
@@ -138,7 +142,10 @@ $('body').delegate('.page>a', 'click', function() {
   $(this).addClass('current');
   $(this).siblings().removeClass('current');
   // get the page number
-  getMsgList($(this).html())
+  getMsgList($(this).html());
+
+  // add cookie to click page number
+  $.addCookie('pageNumber', $(this).html())
 })
 
 // creat blog function
@@ -211,7 +218,8 @@ function getMsgPage() {
       console.log(obj);
       for(var i = 0; i < obj.count; i++) {
         var $a = $('<a href="javascript:;">'+(i+1)+'</a>');
-        if(i === 0) {
+        // the number is the page number
+        if(i === number - 1) {
           $a.addClass('current');
         }
         $('.page').append($a);
