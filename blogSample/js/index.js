@@ -20,7 +20,11 @@ $('body').delegate('.comment', 'propertychange input', function() {
 // getMsgList(1);
 
 // get pageNumber from cookie
-var number = $.getCookie('pageNumber') || 1;
+// var number = $.getCookie('pageNumber') || 1;
+
+// get number form hash
+var number = window.location.hash.substring(1) || 1;
+
 getMsgList(number);
 
 // get page number
@@ -145,7 +149,10 @@ $('body').delegate('.page>a', 'click', function() {
   getMsgList($(this).html());
 
   // add cookie to click page number
-  $.addCookie('pageNumber', $(this).html())
+  // $.addCookie('pageNumber', $(this).html());
+
+  // add hash to click page number
+  window.location.hash = $(this).html();
 })
 
 // creat blog function
